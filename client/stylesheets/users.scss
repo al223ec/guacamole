@@ -1,0 +1,19 @@
+@import "{wolves:bourbon}/bourbon";
+@import "{wolves:neat}/neat";
+
+div.login-container{
+  @include span-columns(6);
+  @include shift(3);
+  text-align: center;
+  form{
+    input{
+      display: block;
+      @include span-columns(6);
+      @include shift(3);
+      
+      padding: 0.5em;
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+  }
+}

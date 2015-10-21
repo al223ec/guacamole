@@ -1,0 +1,32 @@
+@import "{wolves:bourbon}/bourbon";
+@import "{wolves:neat}/neat";
+@import url(https://fonts.googleapis.com/css?family=Slabo+27px);
+
+body{
+  font-family: 'Slabo 27px', serif;
+}
+
+div.main-container{
+  @include outer-container;
+
+  header.page-header {
+    @include outer-container;
+    div{
+      @include span-columns(6);
+    }
+    ul{
+      @include span-columns(6);
+      li{
+        padding: 1em;
+        @include span-columns(2);
+      }
+    }
+  }
+
+  section.page-content{
+    @include outer-container;
+  }
+  footer.page-footer{
+    @include outer-container;
+  }
+}
