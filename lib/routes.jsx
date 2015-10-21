@@ -12,7 +12,6 @@ FlowRouter.route("/login", {
   }
 });
 
-
 function renderMainLayoutWith(component){
   ReactLayout.render(MainLayout, {
     header: <Header />,

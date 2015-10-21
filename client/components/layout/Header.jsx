@@ -24,7 +24,7 @@ Header = React.createClass({
     }
     return (
       <header className="page-header">
-        <div><h1> Bank Game </h1></div>
+        <div><h1> Guacamole Game </h1></div>
         <ul>
           <li><a href="/">Home</a></li>
           { loginButton }
