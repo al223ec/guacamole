@@ -9,7 +9,7 @@ Games = new Mongo.Collection("games");
 
 if (Meteor.isServer) {
   Meteor.publish("games", function () {
-    return Games.find({ players: {$elemMatch: { userId: this.userId } }, ongoing: true } );
+    return Games.find({ players: this.userId, ongoing: true } );
   });
 }
 

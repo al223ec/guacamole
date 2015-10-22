@@ -7,5 +7,10 @@ Meteor.startup(() => {
   }
 
   if(Games.find().count() === 0){
+    Games.insert({
+      ongoing: true,
+      players: [ Accounts.findUserByEmail("email@mail.com")._id ],
+      name : "BankGameName"
+    });
   }
 });

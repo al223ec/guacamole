@@ -9,7 +9,7 @@ GameStateManager = React.createClass({
     let query = {};
 
     return {
-      games: Games.find({ players: {$elemMatch: { userId: Meteor.userId() } }, ongoing: true } ).fetch(),
+      games: Games.find({ players: Meteor.userId(), ongoing: true } ).fetch(),
       currentUser: Meteor.user()
     };
   },
@@ -19,6 +19,9 @@ GameStateManager = React.createClass({
         key={game._id}
         game={game} />;
       });
+  },
+  joinGame(){
+
   },
   render(){
     return (
