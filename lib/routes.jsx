@@ -19,6 +19,13 @@ FlowRouter.route("/register", {
   }
 });
 
+FlowRouter.route("/game", {
+  name: "Game",
+  action(params){
+    renderMainLayoutWith(<GameStateManager />);
+  }
+});
+
 function renderMainLayoutWith(component){
   ReactLayout.render(MainLayout, {
     header: <Header />,

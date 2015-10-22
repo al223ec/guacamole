@@ -5,4 +5,7 @@ Meteor.startup(() => {
       password: "password"
     });
   }
+
+  if(Games.find().count() === 0){
+  }
 });

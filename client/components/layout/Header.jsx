@@ -10,26 +10,30 @@ Header = React.createClass({
   },
 
   render(){
-    let loginButton;
+    let navigation;
     let { currentUser } = this.data;
 
     if(currentUser){
-      loginButton = (
-        <li><a href="#" onClick={ this.handleLogout }>Logout</a></li>
+      navigation = (
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="#" onClick={ this.handleLogout }>Logout</a></li>
+          <li><a href="/game"> Play! </a></li>
+        </ul>
       )
     }else{
-      loginButton = (
-        <li><a href="/login">Login</a></li>
+      navigation = (
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Register</a></li>
+        </ul>
       )
     }
     return (
       <header className="page-header">
         <div><h1> Guacamole Game </h1></div>
-        <ul>
-          <li><a href="/">Home</a></li>
-          { loginButton }
-          { currentUser ? '' : <li><a href="/register">Register</a></li> } 
-        </ul>
+        { navigation }
       </header>
      )
   }
