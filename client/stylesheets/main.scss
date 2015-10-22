@@ -10,7 +10,7 @@ div.main-container{
   @include outer-container;
 
   header.page-header {
-    @include outer-container;
+    @include span-columns(12);
     div{
       @include span-columns(6);
     }
@@ -24,9 +24,9 @@ div.main-container{
   }
 
   section.page-content{
-    @include outer-container;
+    @include span-columns(12);
   }
   footer.page-footer{
-    @include outer-container;
+    @include span-columns(12);
   }
 }

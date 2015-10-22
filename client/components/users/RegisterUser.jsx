@@ -1,4 +1,4 @@
-UserLogin = React.createClass({
+RegisterUser = React.createClass({
   mixins: [],
   PropTypes: {
 
@@ -21,7 +21,7 @@ UserLogin = React.createClass({
 
     var errors = {};
 
-    if (!email) {
+    if (!email) { // validate email.
       errors.email = "Email required"
     }
 
@@ -36,8 +36,11 @@ UserLogin = React.createClass({
     if (! _.isEmpty(errors)) {
       return;
     }
-
-    Meteor.loginWithPassword(email, password, (error) => {
+    // Detta måste väl göras server side??
+    Accounts.createUser({
+      email: email,
+      password: password
+    }, (error) => {
       if (error) {
         this.setState({
           errors: {'none': error.reason}
@@ -46,19 +49,21 @@ UserLogin = React.createClass({
       }
 
       FlowRouter.go('Home');
+
     });
   },
   render(){
+    //  <FormInput hasError={!!this.state.errors.confirmEmail} name="ConfirmEmail" type="text" label="Confirm email" />
     return (
       <div className="login-container">
-        <h1>Login</h1>
+        <h1>Register</h1>
 
           <form onSubmit={this.onSubmit}>
            <AuthErrors errors={this.state.errors} />
 
-           <FormInput hasError={!!this.state.errors.email} name="Email" type="text" label="Email" />
+           <FormInput hasError={!!this.state.errors.email} name="Email" type="email" label="Email" />
            <FormInput hasError={!!this.state.errors.password} name="Password" type="password" label="Password" />
-           <input type="submit" value="Login"/>
+           <input type="submit" value="Register"/>
        </form>
       </div>
     )

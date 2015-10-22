@@ -28,6 +28,7 @@ Header = React.createClass({
         <ul>
           <li><a href="/">Home</a></li>
           { loginButton }
+          { currentUser ? '' : <li><a href="/register">Register</a></li> } 
         </ul>
       </header>
      )
