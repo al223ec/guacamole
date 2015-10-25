@@ -16,8 +16,8 @@ GameStateManager = React.createClass({
   renderGames(){
     return this.data.games.map((game) =>{
       return <Game
-        key={game._id}
-        game={game} />;
+        key={ game._id }
+        game={ game } />;
       });
   },
   // Case admin
@@ -28,9 +28,6 @@ GameStateManager = React.createClass({
   // InvitePlayer
   // StopGame
   // RestartGame
-  // joinGame(){
-  //
-  // },
   render(){
     return (
       <div className="game-container">

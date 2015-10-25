@@ -9,9 +9,7 @@ RegisterUser = React.createClass({
     }
   },
   getMeteorData() {
-    return {
-
-    }
+    return { }
   },
   onSubmit(event) {
     event.preventDefault();

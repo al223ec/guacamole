@@ -9,7 +9,23 @@ Banks = new Mongo.Collection("banks");
 
 if (Meteor.isServer) {
   Meteor.publish("games", function () {
-    return Games.find({ players: this.userId, ongoing: true } );
+    if(this.userId){
+      return Games.find({ players: this.userId, ongoing: true } );
+    }
+  });
+
+  Meteor.publish("banks", function(arg){
+    if(this.userId){
+      var game = Games.findOne({ players: this.userId, ongoing: true });
+      return Banks.find({ owner: { $in: game.players }, gameId: game._id });
+    }
+  });
+
+  Meteor.publish("players", function(){
+    if(this.userId){
+      var game = Games.findOne({ players: this.userId, ongoing: true });
+      return Meteor.users.find({ _id: { $in: game.players }, roles: "player" });
+    }
   });
 }
 

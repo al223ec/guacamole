@@ -1,7 +1,8 @@
 Meteor.subscribe("games");
+Meteor.subscribe("banks");
+Meteor.subscribe("players");
 
 Accounts.onLogin(function() {
-  console.log("Accounts.onLogin")
   var redirect;
   redirect = Session.get('redirectAfterLogin');
   if (redirect != null) {
@@ -14,5 +15,4 @@ Accounts.onLogin(function() {
 });
 
 Meteor.startup(function () {
-
 });

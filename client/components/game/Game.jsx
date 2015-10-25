@@ -2,12 +2,16 @@ Game = React.createClass({
   propTypes: {
     game: React.PropTypes.object.isRequired
   },
-
   mixins: [ReactMeteorData],
   getMeteorData() {
+    var gameId = this.props.game._id;
+
     return {
       currentUser: Meteor.user(),
-      bank: Banks.findOne({ userId: Meteor.userId(), gameId: this.props.game._id }),
+      players: Meteor.users.find({ _id: { $in: this.props.game.players } }).map(function(player){
+        player['bank'] = Banks.findOne({ owner: player._id, gameId: gameId });
+        return player;
+      }),
     }
   },
   handleSubmit(event) {
@@ -18,15 +22,30 @@ Game = React.createClass({
     Meteor.call("addBank", text);
     React.findDOMNode(this.refs.textInput).value = "";
   },
-  renderPrivateBank() {
+  // renderBankList(){
+  //   return this.data.banks.map((bank) =>{
+  //     return <BankListItem
+  //       key={ bank._id }
+  //       bank={ bank } />;
+  //     });
+  // },
+  // renderPlayers(){
+  //   return this.data.players.map((player) =>{
+  //     return <Player
+  //       key={ player._id }
+  //       player={ player } />;
+  //     });
+  // },
+  renderBankPlayers(){
+    return this.data.players.map((player) => {
+      return <BankListItem
+        key={ player._id }
+        bank={ player.bank }
+        player={ player } />;
+    });
   },
-  renderBanks(){
-  },
-
   render() {
     let { currentUser } = this.data;
-    let navigation;
-
     return (
       <div className="game">
         <span className="text"></span>
@@ -34,15 +53,7 @@ Game = React.createClass({
             Game: <strong> { this.props.game.name }</strong> Ongoing: { this.props.game.ongoing }
           </header>
 
-
-        { this.data.bank ? '' :
-          <form className="new-bank" onSubmit={this.handleSubmit} >
-            <input
-              type="text"
-              ref="textInput"
-              placeholder="Type to add a bank" />
-          </form>
-        }
+        { this.renderBankPlayers() }
       </div>
     );
   }

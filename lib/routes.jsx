@@ -3,12 +3,22 @@ var authenticated = FlowRouter.group({
   triggersEnter: [function(context, redirect){
     if (!(Meteor.loggingIn() || Meteor.userId())) {
       var route = FlowRouter.current();
-      console.log(route);
-
+      console.log("not logged in")
       if(route.route.name !== 'Login'){
         Session.set('redirectAfterLogin', route.path);
       }
       FlowRouter.go('Login');
+    }
+  }]
+});
+
+var authenticatedAdmin;
+authenticatedAdmin = authenticated.group({
+  prefix: '/admin',
+  name: 'Admin',
+  triggersEnter: [function(context, redirect) {
+    if (!Roles.userIsInRole(Meteor.user(), ['admin'])) {
+      return FlowRouter.go(FlowRouter.path('Dashboard'));
     }
   }]
 });
@@ -36,6 +46,14 @@ exposed.route("/register", {
 
 authenticated.route("/game", {
   name: "Game",
+  action(params){
+    console.log("/game")
+    renderMainLayoutWith(<GameStateManager />);
+  }
+});
+
+authenticated.route("/dashboard", {
+  name: "Dashboard",
   action(params){
     renderMainLayoutWith(<GameStateManager />);
   }
