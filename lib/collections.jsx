@@ -1,5 +1,5 @@
 Games = new Mongo.Collection("games");
-
+Banks = new Mongo.Collection("banks");
 // Games.currentGame = function(){
 //   return Games.findOne({ players: Meteor.userId(), ongoing: true });
 // }

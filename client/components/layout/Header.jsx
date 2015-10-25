@@ -6,7 +6,9 @@ Header = React.createClass({
     }
   },
   handleLogout(){
+    //TODO::känns lämpligt att flytta detta till en egen route senare
     Meteor.logout();
+    FlowRouter.go('Home');
   },
 
   render(){

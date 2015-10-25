@@ -1,25 +1,40 @@
-FlowRouter.route("/", {
+var exposed = FlowRouter.group({});
+var authenticated = FlowRouter.group({
+  triggersEnter: [function(context, redirect){
+    if (!(Meteor.loggingIn() || Meteor.userId())) {
+      var route = FlowRouter.current();
+      console.log(route);
+
+      if(route.route.name !== 'Login'){
+        Session.set('redirectAfterLogin', route.path);
+      }
+      FlowRouter.go('Login');
+    }
+  }]
+});
+
+exposed.route("/", {
   name: "Home",
   action(params){
     renderMainLayoutWith(<Home />);
   }
 });
 
-FlowRouter.route("/login", {
+exposed.route("/login", {
   name: "Login",
   action(params){
     renderMainLayoutWith(<UserLogin />);
   }
 });
 
-FlowRouter.route("/register", {
+exposed.route("/register", {
   name: "Register",
   action(params){
     renderMainLayoutWith(<RegisterUser />);
   }
 });
 
-FlowRouter.route("/game", {
+authenticated.route("/game", {
   name: "Game",
   action(params){
     renderMainLayoutWith(<GameStateManager />);

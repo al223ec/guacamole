@@ -20,9 +20,17 @@ GameStateManager = React.createClass({
         game={game} />;
       });
   },
-  joinGame(){
-
-  },
+  // Case admin
+  // KickPlayer
+  // PauseGame
+  // StartGame
+  // NewGame
+  // InvitePlayer
+  // StopGame
+  // RestartGame
+  // joinGame(){
+  //
+  // },
   render(){
     return (
       <div className="game-container">

@@ -6,7 +6,8 @@ Game = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      currentUser: Meteor.user()
+      currentUser: Meteor.user(),
+      bank: Banks.findOne({ userId: Meteor.userId(), gameId: this.props.game._id }),
     }
   },
   handleSubmit(event) {
@@ -28,11 +29,11 @@ Game = React.createClass({
 
     return (
       <div className="game">
-        <span className="text">
+        <span className="text"></span>
           <header>
             Game: <strong> { this.props.game.name }</strong> Ongoing: { this.props.game.ongoing }
           </header>
-        </span>
+
 
         { this.data.bank ? '' :
           <form className="new-bank" onSubmit={this.handleSubmit} >
