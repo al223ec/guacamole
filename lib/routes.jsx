@@ -11,6 +11,8 @@ var authenticated = FlowRouter.group({
     }
   }]
 });
+// https://meteorhacks.com/flow-router-and-subscription-management
+///
 
 var authenticatedAdmin;
 authenticatedAdmin = authenticated.group({
@@ -44,10 +46,10 @@ exposed.route("/register", {
   }
 });
 
+
 authenticated.route("/game", {
   name: "Game",
   action(params){
-    console.log("/game")
     renderMainLayoutWith(<GameStateManager />);
   }
 });

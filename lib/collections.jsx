@@ -1,5 +1,6 @@
 Games = new Mongo.Collection("games");
 Banks = new Mongo.Collection("banks");
+Customers = new Mongo.Collection("customers");
 // Games.currentGame = function(){
 //   return Games.findOne({ players: Meteor.userId(), ongoing: true });
 // }
@@ -14,7 +15,7 @@ if (Meteor.isServer) {
     }
   });
 
-  Meteor.publish("banks", function(arg){
+  Meteor.publish("banks", function(){
     if(this.userId){
       var game = Games.findOne({ players: this.userId, ongoing: true });
       return Banks.find({ owner: { $in: game.players }, gameId: game._id });
@@ -27,6 +28,24 @@ if (Meteor.isServer) {
       return Meteor.users.find({ _id: { $in: game.players }, roles: "player" });
     }
   });
+
+  Meteor.publish("banksWithCustomers", function(){
+    if(this.userId){
+      var game = Games.findOne({ players: this.userId, ongoing: true });
+      var banks = Banks.find({ owner: { $in: game.players }, gameId: game._id });
+      var bankIds = banks.map(function(bank){ return bank._id });
+
+      return [
+        banks,
+        Customers.find({ bankId: { $in: bankIds }})
+      ]
+    }
+  });
+
+  Meteor.publish("customers", function(bankId){
+    return Customers.find({ bankId: bankId }); 
+  });
+
 }
 
 Meteor.methods({

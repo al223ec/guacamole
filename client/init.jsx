@@ -1,6 +1,4 @@
-Meteor.subscribe("games");
 Meteor.subscribe("banks");
-Meteor.subscribe("players");
 
 Accounts.onLogin(function() {
   var redirect;

@@ -37,11 +37,19 @@ Meteor.startup(() => {
   if(Banks.find().count() === 0){
     Meteor.users.find({ roles: "player" }).map(
       function(user, index, originalCursor){
-        var bank =  Banks.insert({
-          owner: user._id,
-          gameId: Games.findOne({ players: user._id })._id,
-          name: "My bootstrapped bank " + user.profile.name
-        });
+          Banks.insert({
+            owner: user._id,
+            gameId: Games.findOne({ players: user._id })._id,
+            name: "My bootstrapped bank " + user.profile.name
+          });
+
+          for(var i = 0; i < 100; i++){
+            Customers.insert({
+              loan: 1500000,
+              savings: 50000,
+              bankId: Banks.findOne({ owner: user._id })._id
+            });
+          }
       });
-    }
-  });
+  }
+});

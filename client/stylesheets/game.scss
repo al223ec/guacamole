@@ -1,0 +1,24 @@
+@import "{wolves:bourbon}/bourbon";
+@import "{wolves:neat}/neat";
+
+div.game{
+  div.bank-player-list{
+    @include span-columns(12);
+    section.bank-player-list-header{
+      @include span-columns(12);
+    }
+    div.bank-list-item{
+      width:100%;
+      div.bank-item{
+        @include span-columns(8);
+        margin-right: 0;
+      }
+      div.player{
+        @include span-columns(4);
+      }
+      hr{
+        @include span-columns(12);
+      }
+    }
+  }
+}

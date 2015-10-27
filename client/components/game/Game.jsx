@@ -5,6 +5,7 @@ Game = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var gameId = this.props.game._id;
+    Meteor.subscribe("players");
 
     return {
       currentUser: Meteor.user(),
@@ -36,7 +37,7 @@ Game = React.createClass({
   //       player={ player } />;
   //     });
   // },
-  renderBankPlayers(){
+  renderBankPlayerList(){
     return this.data.players.map((player) => {
       return <BankListItem
         key={ player._id }
@@ -52,8 +53,10 @@ Game = React.createClass({
           <header>
             Game: <strong> { this.props.game.name }</strong> Ongoing: { this.props.game.ongoing }
           </header>
-
-        { this.renderBankPlayers() }
+          <div className="bank-player-list">
+            <section className="bank-player-list-header">Header</section>
+            { this.renderBankPlayerList() }
+          </div>
       </div>
     );
   }

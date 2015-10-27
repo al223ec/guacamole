@@ -7,7 +7,8 @@ GameStateManager = React.createClass({
   },
   getMeteorData() {
     let query = {};
-
+    Meteor.subscribe("games");
+    
     return {
       games: Games.find({ players: Meteor.userId(), ongoing: true } ).fetch(),
       currentUser: Meteor.user()
