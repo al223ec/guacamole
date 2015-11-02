@@ -47,6 +47,7 @@ Game = React.createClass({
   },
   render() {
     let { currentUser } = this.data;
+    
     return (
       <div className="game">
         <span className="text"></span>

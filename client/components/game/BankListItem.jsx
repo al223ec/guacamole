@@ -3,7 +3,6 @@ BankListItem = React.createClass({
     player: React.PropTypes.object.isRequired,
     bank: React.PropTypes.object.isRequired,
   },
-
   mixins: [ReactMeteorData],
   getMeteorData() {
     var data = {};
@@ -18,16 +17,18 @@ BankListItem = React.createClass({
   },
   render() {
     let { bank } = this.props;
-          //
+    const bankClassName = (this.data.currentUser._id == bank.owner ? "bank-list-item highlighted" : "bank-list-item");
+
     return (
-      <div className="bank-list-item">
-        <div className="bank-item">
+      <div className={ bankClassName }>
+        <div className="bank-item" >
           <span> { bank ? bank.name : "No bank registered!" } </span>
           <span className="customers"> { this.data.customersCount }</span>
         </div>
         <div className="player">
           <span className="text"> { this.props.player.profile.name }</span>
         </div>
+        <a href > Add Customer </a>
         <hr></hr>
       </div>
     );

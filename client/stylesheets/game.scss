@@ -10,15 +10,22 @@ div.game{
     div.bank-list-item{
       width:100%;
       div.bank-item{
-        @include span-columns(8);
+        @include span-columns(7);
         margin-right: 0;
       }
       div.player{
-        @include span-columns(4);
+        @include span-columns(3);
+      }
+      a{
+        @include span-columns(2);
       }
       hr{
         @include span-columns(12);
       }
+    }
+    .highlighted{
+            width:100%;
+      background-color: #ccc;
     }
   }
 }
