@@ -15,22 +15,30 @@ BankListItem = React.createClass({
     data.currentUser =  Meteor.user();
     return data;
   },
+  addCustomer() {
+    Meteor.call("addCustomer", this.props.bank._id);
+  },
   render() {
     let { bank } = this.props;
     const bankClassName = (this.data.currentUser._id == bank.owner ? "bank-list-item highlighted" : "bank-list-item");
 
     return (
-      <div className={ bankClassName }>
-        <div className="bank-item" >
+      <tr className={ bankClassName }>
+        <td className="bank-item" >
           <span> { bank ? bank.name : "No bank registered!" } </span>
+        </td>
+        <td>
           <span className="customers"> { this.data.customersCount }</span>
-        </div>
-        <div className="player">
+        </td>
+        <td className="player">
           <span className="text"> { this.props.player.profile.name }</span>
-        </div>
-        <a href > Add Customer </a>
-        <hr></hr>
-      </div>
+        </td>
+        <td>
+          <button className="increase" onClick={this.addCustomer}>
+            Add customer
+          </button>
+        </td>
+      </tr>
     );
   }
 });

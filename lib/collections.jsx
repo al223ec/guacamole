@@ -29,21 +29,21 @@ if (Meteor.isServer) {
     }
   });
 
-  Meteor.publish("banksWithCustomers", function(){
-    if(this.userId){
-      var game = Games.findOne({ players: this.userId, ongoing: true });
-      var banks = Banks.find({ owner: { $in: game.players }, gameId: game._id });
-      var bankIds = banks.map(function(bank){ return bank._id });
-
-      return [
-        banks,
-        Customers.find({ bankId: { $in: bankIds }})
-      ]
-    }
-  });
+  // Meteor.publish("banksWithCustomers", function(){
+  //   if(this.userId){
+  //     var game = Games.findOne({ players: this.userId, ongoing: true });
+  //     var banks = Banks.find({ owner: { $in: game.players }, gameId: game._id });
+  //     var bankIds = banks.map(function(bank){ return bank._id });
+  //
+  //     return [
+  //       banks,
+  //       Customers.find({ bankId: { $in: bankIds }})
+  //     ]
+  //   }
+  // });
 
   Meteor.publish("customers", function(bankId){
-    return Customers.find({ bankId: bankId }); 
+    return Customers.find({ bankId: bankId });
   });
 
 }
@@ -61,4 +61,15 @@ Meteor.methods({
   addPlayer(gameId, userId){
     Games.update(gameId, { $push: { players: userId }});
   },
+  addCustomer(bankId){
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+    const bank = Banks.findOne(bankId);
+    Customers.insert({
+      loan: 1500000,
+      savings: 50000,
+      bankId: bank._id
+    });
+  }
 });

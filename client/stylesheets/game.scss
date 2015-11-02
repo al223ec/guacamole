@@ -7,25 +7,14 @@ div.game{
     section.bank-player-list-header{
       @include span-columns(12);
     }
-    div.bank-list-item{
-      width:100%;
-      div.bank-item{
-        @include span-columns(7);
-        margin-right: 0;
+    table{
+      @include span-columns(12);
+      tr.bank-list-item{
+        width:100%;
       }
-      div.player{
-        @include span-columns(3);
+      .highlighted{
+        background-color: #ccc;
       }
-      a{
-        @include span-columns(2);
-      }
-      hr{
-        @include span-columns(12);
-      }
-    }
-    .highlighted{
-            width:100%;
-      background-color: #ccc;
     }
   }
 }

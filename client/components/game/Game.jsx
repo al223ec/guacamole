@@ -47,7 +47,7 @@ Game = React.createClass({
   },
   render() {
     let { currentUser } = this.data;
-    
+
     return (
       <div className="game">
         <span className="text"></span>
@@ -55,8 +55,10 @@ Game = React.createClass({
             Game: <strong> { this.props.game.name }</strong> Ongoing: { this.props.game.ongoing }
           </header>
           <div className="bank-player-list">
-            <section className="bank-player-list-header">Header</section>
-            { this.renderBankPlayerList() }
+            <table>
+              <thead><th>Name</th> <th>Customers</th> <th>Player</th> <th></th> </thead>
+              { this.renderBankPlayerList() }
+            </table>
           </div>
       </div>
     );
