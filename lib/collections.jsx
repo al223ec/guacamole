@@ -1,5 +1,7 @@
 Games = new Mongo.Collection("games");
-Banks = new Mongo.Collection("banks");
+Banks = new Mongo.Collection("banks", {
+  transform: function (doc) { return new Bank(doc); }
+});
 Customers = new Mongo.Collection("customers");
 // Games.currentGame = function(){
 //   return Games.findOne({ players: Meteor.userId(), ongoing: true });
@@ -43,7 +45,9 @@ if (Meteor.isServer) {
   // });
 
   Meteor.publish("customers", function(bankId){
-    return Customers.find({ bankId: bankId });
+    if(this.userId){
+      return Customers.find({ bankId: bankId });
+    }
   });
 
 }

@@ -56,7 +56,7 @@ Game = React.createClass({
           </header>
           <div className="bank-player-list">
             <table>
-              <thead><th>Name</th> <th>Customers</th> <th>Player</th> <th></th> </thead>
+              <thead><th>Name</th> <th>Customers</th> <th>Player</th> <th>Total</th> <th></th> </thead>
               { this.renderBankPlayerList() }
             </table>
           </div>

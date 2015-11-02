@@ -21,6 +21,7 @@ Header = React.createClass({
           <li><a href="/">Home</a></li>
           <li><a href="#" onClick={ this.handleLogout }>Logout</a></li>
           <li><a href="/game"> Play! </a></li>
+          <li><a href="/bank/edit"> Edit bank </a></li>
         </ul>
       )
     }else{

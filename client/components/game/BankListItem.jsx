@@ -34,6 +34,9 @@ BankListItem = React.createClass({
           <span className="text"> { this.props.player.profile.name }</span>
         </td>
         <td>
+          { bank.countTotal() }
+        </td>
+        <td>
           <button className="increase" onClick={this.addCustomer}>
             Add customer
           </button>
