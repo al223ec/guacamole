@@ -53,10 +53,10 @@ authenticated.route("/game", {
     renderMainLayoutWith(<GameStateManager />);
   }
 });
-authenticated.route("/bank/edit", {
+authenticated.route("/bank/:id", {
   name: "Bank",
   action(params){
-    renderMainLayoutWith(<BankEditor />);
+    renderMainLayoutWith(<BankEditor bankId={ params.id } />);
   }
 });
 

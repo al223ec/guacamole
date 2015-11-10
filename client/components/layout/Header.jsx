@@ -2,7 +2,8 @@ Header = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
     return {
-      currentUser: Meteor.user()
+      currentUser: Meteor.user(),
+      bank: Banks.find({ owner: Meteor.userId() }).fetch()
     }
   },
   handleLogout(){
@@ -21,7 +22,6 @@ Header = React.createClass({
           <li><a href="/">Home</a></li>
           <li><a href="#" onClick={ this.handleLogout }>Logout</a></li>
           <li><a href="/game"> Play! </a></li>
-          <li><a href="/bank/edit"> Edit bank </a></li>
         </ul>
       )
     }else{

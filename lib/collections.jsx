@@ -17,6 +17,12 @@ if (Meteor.isServer) {
     }
   });
 
+  Meteor.publish("game", function(){
+    if(this.userId){
+      return Games.findOne({ players: this.userId, ongoing: true });
+    }
+  });
+
   Meteor.publish("banks", function(){
     if(this.userId){
       var game = Games.findOne({ players: this.userId, ongoing: true });

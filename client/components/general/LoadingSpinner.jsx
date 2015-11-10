@@ -4,6 +4,7 @@ LoadingSpinner = React.createClass({
     render() {
         return (
           <div className="loading-spinner">
+            Loading ...
           </div>
         )
     }

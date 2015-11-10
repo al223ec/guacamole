@@ -10,7 +10,6 @@ Player = React.createClass({
     }
   },
   render() {
-    // let { currentUser } = this.data;
     return (
       <div className="player">
         <span className="text"> { this.props.player.profile.name }  </span>

@@ -1,5 +1,7 @@
 BankEditor = React.createClass({
-  propTypes: {},
+  propTypes: {
+    bankId: React.PropTypes.string.isRequired
+  },
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -9,6 +11,7 @@ BankEditor = React.createClass({
   getMeteorData() {
     return {
       currentUser: Meteor.user(),
+      bank: Banks.findOne({ _id: this.props.bankId })
     }
   },
   handleSubmit(event) {
@@ -45,7 +48,7 @@ BankEditor = React.createClass({
           <form onSubmit={ this.handleSubmit }>
            <AuthErrors errors={ this.state.errors } />
 
-           <FormInput hasError={!!this.state.errors.name} name="Name" type="text" label="Name" />
+           <FormInput hasError={!!this.state.errors.name} name="Name" type="text" label="Name" value={ this.data.bank.name } />
            <FormInput hasError={!!this.state.errors.interest} name="Interest" type="number" label="Interest" />
            <input type="submit" value="Update"/>
        </form>

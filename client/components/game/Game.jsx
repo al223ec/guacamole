@@ -13,6 +13,7 @@ Game = React.createClass({
         player['bank'] = Banks.findOne({ owner: player._id, gameId: gameId });
         return player;
       }),
+      currentUserBank: Banks.findOne({ owner: Meteor.userId(), gameId: gameId })
     }
   },
   handleSubmit(event) {
@@ -47,13 +48,18 @@ Game = React.createClass({
   },
   render() {
     let { currentUser } = this.data;
+    var url = "bank/" + this.data.currentUserBank._id;
 
     return (
       <div className="game">
         <span className="text"></span>
-          <header>
-            Game: <strong> { this.props.game.name }</strong> Ongoing: { this.props.game.ongoing }
-          </header>
+          <nav>
+            <h1> { this.props.game.name } </h1>
+            <ul>
+              <li> Top list </li>
+              <li><a href={ url }> Dashboard </a></li>
+            </ul>
+          </nav>
           <div className="bank-player-list">
             <table>
               <thead><th>Name</th> <th>Customers</th> <th>Player</th> <th>Total</th> <th></th> </thead>
