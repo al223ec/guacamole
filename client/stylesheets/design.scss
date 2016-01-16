@@ -1,0 +1,39 @@
+@import "{wolves:bourbon}/bourbon";
+@import "{wolves:neat}/neat";
+
+$base-background-color: #ecf0f1;
+$base-light-background-color: #fff;
+$base-accent-blue-color: #34495e;
+$base-accent-darkend-blue-color:#233342;
+
+$base-accent-green-color: #2dcc70;
+$base-accent-purple-color: #8d44ad;
+
+$cta-color: #e6661b;
+$cta-secondary-color: #ea4a3a;
+
+// $base-color: #f5f5f5;
+// $base-darkend-color: darken($base-color, 10%);
+// $cta-secondary-color: $base-accent-color;
+// $footer-color: #2e3234;
+//
+// // Font Colors
+$base-font-color: #152a3d;
+$light-font-color: #93a6a2;
+
+// $subtile-font-color: #9b9b9b;
+
+body {
+  background-color: $base-background-color;
+  color: $base-font-color;
+}
+a {
+  color: $cta-color;
+  text-decoration: none;
+}
+
+.design{
+  .user{
+    background-color: $base-light-background-color;
+  }
+}

@@ -44,6 +44,12 @@ exposed.route("/register", {
   }
 });
 
+exposed.route("/design", {
+  name: "Design",
+  action(params){
+    renderMainLayoutWith(<Design />);
+  }
+});
 
 authenticated.route("/game", {
   name: "Game",
