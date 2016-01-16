@@ -22,6 +22,7 @@ Header = React.createClass({
           <li><a href="/">Home</a></li>
           <li><a href="#" onClick={ this.handleLogout }>Logout</a></li>
           <li><a href="/game"> Play! </a></li>
+          <li><a href="/design">Design</a></li>
         </ul>
       )
     }else{
@@ -30,6 +31,7 @@ Header = React.createClass({
           <li><a href="/">Home</a></li>
           <li><a href="/login">Login</a></li>
           <li><a href="/register">Register</a></li>
+          <li><a href="/design">Design</a></li>
         </ul>
       )
     }
