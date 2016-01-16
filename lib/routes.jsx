@@ -12,8 +12,6 @@ var authenticated = FlowRouter.group({
   }]
 });
 // https://meteorhacks.com/flow-router-and-subscription-management
-///
-
 var authenticatedAdmin;
 authenticatedAdmin = authenticated.group({
   prefix: '/admin',
