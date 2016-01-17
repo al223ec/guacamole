@@ -1,4 +1,5 @@
 var exposed = FlowRouter.group({});
+
 var authenticated = FlowRouter.group({
   triggersEnter: [function(context, redirect){
     if (!(Meteor.loggingIn() || Meteor.userId())) {
@@ -12,8 +13,7 @@ var authenticated = FlowRouter.group({
   }]
 });
 // https://meteorhacks.com/flow-router-and-subscription-management
-var authenticatedAdmin;
-authenticatedAdmin = authenticated.group({
+var authenticatedAdmin = authenticated.group({
   prefix: '/admin',
   name: 'Admin',
   triggersEnter: [function(context, redirect) {
@@ -44,12 +44,6 @@ exposed.route("/register", {
   }
 });
 
-exposed.route("/design", {
-  name: "Design",
-  action(params){
-    renderMainLayoutWith(<Design />);
-  }
-});
 
 authenticated.route("/game", {
   name: "Game",
@@ -57,6 +51,19 @@ authenticated.route("/game", {
     renderMainLayoutWith(<GameStateManager />);
   }
 });
+
+var gameRoutes = authenticated.group({
+    prefix: "/game/:game_id",
+    name: "Game"
+});
+
+gameRoutes.route('/start', {
+  name: "Start",
+  action(params){
+    renderMainLayoutWith(<GameStateManager  myChildComponent=<GameStartPage gameId={ params.game_id }/> />);
+  },
+});
+
 authenticated.route("/bank/:id", {
   name: "Bank",
   action(params){

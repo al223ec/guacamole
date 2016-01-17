@@ -2,22 +2,9 @@
 @import "{wolves:neat}/neat";
 
 div.game{
-  nav{
-    h1{
-      @include span-columns(2);
-    }
-    ul {
-    @include span-columns(10);
-      li{
-        @include span-columns(6);
-        float:left;
-      }
-    }
-  }
-
   div.bank-player-list{
     @include span-columns(12);
-    section.bank-player-list-header{
+    .bank-player-list-header{
       @include span-columns(12);
     }
     table{

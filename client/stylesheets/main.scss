@@ -6,16 +6,22 @@ body{
   font-family: 'Ek Mukta', sans-serif;
 }
 
-div.main-container{
+div.container{
   @include outer-container;
 
   header.page-header {
     @include span-columns(12);
     div{
       @include span-columns(6);
+      h1{
+        margin: 0;
+        padding: 0;
+      }
     }
     ul{
       @include span-columns(6);
+      margin: 0;
+      padding: 0; 
       li{
         padding: 1em;
         @include span-columns(2);

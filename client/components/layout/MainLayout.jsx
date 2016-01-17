@@ -1,23 +1,12 @@
 MainLayout = React.createClass({
-  // propTypes: {},
-  // mixins: [
-  //   //ReactMeteorData
-  // ],
-  // getInitialState(){
-  //   return null;
-  // },
-  // getMeteorData(){
-  //
-  // },
   render(){
     return (
-      <div className="main-container">
-        { this.props.header }
+      <div>
+        <div className="container">
+          { this.props.header }
+        </div>
 
-        <section className="page-content">
-          { this.props.content }
-        </section>
-
+        { this.props.content }
         { this.props.footer }
       </div>
     )

@@ -11,19 +11,11 @@ GameStateManager = React.createClass({
     // Bör börja med att endast fetcha ett game, göra en begränsning att inga nya spel kan överhuvudtaget skapas, endast ett som första version
     return {
       loading: ! handle.ready(),
-      //games: Games.find({ players: Meteor.userId(), ongoing: true } ).fetch(),
       game: Games.findOne( { players: Meteor.userId(), ongoing: true } ),
-      currentUser: Meteor.user()
+      currentUser: Meteor.user(),
+      // currentUserBank: Banks.findOne({ owner: Meteor.userId(), gameId: gameId })
     };
   },
-  // renderGames(){
-  //   return this.data.games.map((game) =>{
-  //     return <Game
-  //       key={ game._id }
-  //       game={ game } />;
-  //     });
-  // },
-
   // Case admin
   // KickPlayer
   // PauseGame
@@ -32,15 +24,36 @@ GameStateManager = React.createClass({
   // InvitePlayer
   // StopGame
   // RestartGame
+  // <Game key={ game._id } game={ game } />
   render(){
     if (this.data.loading) {
       return <LoadingSpinner />;
     }
-    
+
     let { game } = this.data;
 
+    var url = "game/" + game._id + "/";
     return (
-      <Game key={ game._id } game={ game } />
+      <div className="game">
+          <div className="container game-meta">
+            <span className="heading"> { game.name } </span>
+            <ul>
+              <li>Tid: </li>
+            </ul>
+          </div>
+          <div className="game-navigation-container">
+            <div className="game-navigation">
+              <ul>
+                <li><span className='icon icon-briefcase'></span> Start</li>
+                <li>Räntor</li>
+                <li>Avgifter</li>
+                <li>Marknad</li>
+                <li>Toplista</li>
+              </ul>
+            </div>
+          </div>
+          <section> { this.props.myChildComponent } </section>
+      </div>
     )
   }
 });
