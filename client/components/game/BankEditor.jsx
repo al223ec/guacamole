@@ -18,7 +18,8 @@ BankEditor = React.createClass({
     event.preventDefault();
     var name = $(event.target).find("[name=name]").val();
     var interest = $(event.target).find("[name=interest]").val();
-
+    console.log(name);
+    
     var errors = {};
 
     if (!name) {

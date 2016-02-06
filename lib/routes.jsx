@@ -45,10 +45,10 @@ exposed.route("/register", {
 });
 
 
-authenticated.route("/game", {
+authenticated.route("/game/:game_id", {
   name: "Game",
   action(params){
-    renderMainLayoutWith(<GameStateManager />);
+    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } />);
   }
 });
 
@@ -60,7 +60,7 @@ var gameRoutes = authenticated.group({
 gameRoutes.route('/start', {
   name: "Start",
   action(params){
-    renderMainLayoutWith(<GameStateManager  myChildComponent=<GameStartPage gameId={ params.game_id }/> />);
+    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } myChildComponent=<GameStartPage gameId={ params.game_id }/> />);
   },
 });
 

@@ -11,5 +11,8 @@ _.extend(Bank.prototype, {
       total += customer.loan
     });
     return total;
+  },
+  getInterest: function(){
+    return this.interest; 
   }
 });

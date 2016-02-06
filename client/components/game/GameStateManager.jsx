@@ -29,10 +29,7 @@ GameStateManager = React.createClass({
     if (this.data.loading) {
       return <LoadingSpinner />;
     }
-
     let { game } = this.data;
-
-    var url = "game/" + game._id + "/";
     return (
       <div className="game">
           <div className="container game-meta">
@@ -44,11 +41,11 @@ GameStateManager = React.createClass({
           <div className="game-navigation-container">
             <div className="game-navigation">
               <ul>
-                <li><span className='icon icon-briefcase'></span> Start</li>
-                <li>Räntor</li>
+                <li><span className='icon icon-briefcase'></span><a href={ "/game/" + game._id + "/start" }>Start</a></li>
+                <li><a href={ "/game/" + game._id + "/interests" }>Räntor</a></li>
                 <li>Avgifter</li>
                 <li>Marknad</li>
-                <li>Toplista</li>
+                <li><a href={ "/game/" + game._id + "/toplist" }>Toplista</a></li>
               </ul>
             </div>
           </div>

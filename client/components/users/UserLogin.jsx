@@ -42,7 +42,7 @@ UserLogin = React.createClass({
         });
         return;
       }
-      // FlowRouter.go('Home');
+      FlowRouter.go('Home');
     });
   },
   render(){

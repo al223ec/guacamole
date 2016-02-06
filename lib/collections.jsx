@@ -65,11 +65,12 @@ Meteor.methods({
     }
     //return Banks.find({ game: Games.currentGame()._id });
   },
-  isPlayer(userId){
-    return Games.findOne({ players: {$elemMatch: {userId: userId() } }, ongoing:true }) !== null
-  },
-  addPlayer(gameId, userId){
-    Games.update(gameId, { $push: { players: userId }});
+  updateBank(clientBank){
+    var bank = Banks.findOne(clientBank.bankId);
+    if ( bank.owner !== Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+    Banks.update(clientBank.bankId,  { $set: { interest: clientBank.interest, name: clientBank.name } });
   },
   addCustomer(bankId){
     if (! Meteor.userId()) {
@@ -83,3 +84,12 @@ Meteor.methods({
     });
   }
 });
+
+/*
+isPlayer(userId){
+  return Games.findOne({ players: {$elemMatch: {userId: userId() } }, ongoing:true }) !== null
+},
+addPlayer(gameId, userId){
+  Games.update(gameId, { $push: { players: userId }});
+},
+*/

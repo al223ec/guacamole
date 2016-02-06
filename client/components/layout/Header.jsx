@@ -1,9 +1,13 @@
 Header = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
+    var handle = Meteor.subscribe("games");
     return {
+      loading: ! handle.ready(),
       currentUser: Meteor.user(),
-      bank: Banks.find({ owner: Meteor.userId() }).fetch()
+      game: Games.findOne( { players: Meteor.userId(), ongoing: true } ),
+    //  bank: Banks.find({ owner: Meteor.userId() }).fetch(),
+    //  game: Games.findOne( { players: Meteor.userId(), ongoing: true } )
     }
   },
   handleLogout(){
@@ -14,15 +18,18 @@ Header = React.createClass({
 
   render(){
     let navigation;
-    let { currentUser } = this.data;
+    let { currentUser, game } = this.data;
 
     if(currentUser){
+      if (this.data.loading) {
+        return <LoadingSpinner />;
+      }
+      
       navigation = (
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="#" onClick={ this.handleLogout }>Logout</a></li>
-          <li><a href="/game"> Play! </a></li>
-          <li><a href="/design">Design</a></li>
+          <li><a href={ "/game/" + game._id }> Play! </a></li>
         </ul>
       )
     }else{
@@ -31,7 +38,6 @@ Header = React.createClass({
           <li><a href="/">Home</a></li>
           <li><a href="/login">Login</a></li>
           <li><a href="/register">Register</a></li>
-          <li><a href="/design">Design</a></li>
         </ul>
       )
     }
