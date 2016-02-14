@@ -5,6 +5,7 @@ FormInput = React.createClass({
         type: React.PropTypes.string,
         name: React.PropTypes.string,
         value: React.PropTypes.string,
+        step: React.PropTypes.string,
         onKeyUp: React.PropTypes.func,
         onBlur: React.PropTypes.func
     },
@@ -12,7 +13,7 @@ FormInput = React.createClass({
         return true;
     },
     render() {
-        const {type, label, name, value, onKeyUp, onBlur } = this.props;
+        const {type, label, name, value, onKeyUp, onBlur, step } = this.props;
         let inputType;
 
         var className = "form-group";
@@ -27,7 +28,7 @@ FormInput = React.createClass({
                 break;
             default:
                 inputType = (
-                  <input type={ type } className="form-control" name={ name.toLowerCase() } placeholder={ name } defaultValue={ value } onKeyUp={ onKeyUp } onBlur={ onBlur }/>
+                  <input type={ type } className="form-control" name={ name.toLowerCase() } placeholder={ name } defaultValue={ value } step={ step } onKeyUp={ onKeyUp } onBlur={ onBlur }/>
                 );
                 break;
         }

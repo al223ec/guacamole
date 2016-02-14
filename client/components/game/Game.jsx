@@ -1,4 +1,4 @@
-Game = React.createClass({
+/*Game = React.createClass({
   propTypes: {
     game: React.PropTypes.object.isRequired,
   },
@@ -83,4 +83,4 @@ Game = React.createClass({
       </div>
     );
   }
-});
+});*/

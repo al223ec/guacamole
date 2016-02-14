@@ -37,7 +37,6 @@ GameStartPage = React.createClass({
     if (! _.isEmpty(errors)) {
       return;
     }
-
     Meteor.call("updateBank", { bankId: this.data.bank._id, name : name, interest: interest });
   },
   render(){
@@ -45,16 +44,15 @@ GameStartPage = React.createClass({
     if (this.data.loading) {
       return <LoadingSpinner />;
     }
-    console.log(bank.getInterest())
     return (
       <div>
-        Start { bank.name }
+        Start { bank.name } interest: { bank.interest }
 
         <form onSubmit={ this.handleSubmit }>
          <AuthErrors errors={ this.state.errors } />
 
-         <FormInput hasError={!!this.state.errors.name} name="name" type="text" label="Name" value={ this.data.bank.name } />
-         <FormInput hasError={!!this.state.errors.interest} name="interest" type="number" label="Interest" />
+         <FormInput hasError={!!this.state.errors.name} name="name" type="text" label="Name" value={ bank.name } />
+         <FormInput hasError={!!this.state.errors.interest} name="interest" type="number" step="0.01" label="Interest" value={ bank.interest }/>
          <input type="submit" value="Update"/>
          </form>
       </div>

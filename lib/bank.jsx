@@ -13,6 +13,11 @@ _.extend(Bank.prototype, {
     return total;
   },
   getInterest: function(){
-    return this.interest; 
+    return this.interest;
+  },
+  getCompareValue: function(){
+    // Beräkna ett värde som kommer omvandlas till en procentuell andel kunder i förhållande till andra banker
+    var interest = this.interest ? this.interest : 3;
+    return 10 - interest;
   }
 });

@@ -30,12 +30,13 @@ GameStateManager = React.createClass({
       return <LoadingSpinner />;
     }
     let { game } = this.data;
+
     return (
       <div className="game">
           <div className="container game-meta">
             <span className="heading"> { game.name } </span>
             <ul>
-              <li>Tid: </li>
+              <li>Tid: { game.time } </li>
             </ul>
           </div>
           <div className="game-navigation-container">

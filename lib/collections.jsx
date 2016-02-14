@@ -1,4 +1,7 @@
-Games = new Mongo.Collection("games");
+Games = new Mongo.Collection("games", {
+  transform: function (doc) { return new Game(doc); }
+});
+
 Banks = new Mongo.Collection("banks", {
   transform: function (doc) { return new Bank(doc); }
 });
@@ -11,17 +14,23 @@ Customers = new Mongo.Collection("customers");
 // }
 
 if (Meteor.isServer) {
+  var gameStepTime = 5000;
+
   Meteor.publish("games", function () {
     if(this.userId){
-      return Games.find({ players: this.userId, ongoing: true } );
+      var games = Games.find({ players: this.userId, ongoing: true } );
+      games.map((game) =>{
+        setInterval(gameTick(game), 5000);
+      });
+      return games;
     }
   });
-
+  /*
   Meteor.publish("game", function(){
     if(this.userId){
       return Games.findOne({ players: this.userId, ongoing: true });
     }
-  });
+  });*/
 
   Meteor.publish("banks", function(){
     if(this.userId){
@@ -37,6 +46,11 @@ if (Meteor.isServer) {
     }
   });
 
+  function gameTick(game){
+    return Meteor.bindEnvironment(function(){
+      game.tick();
+    });
+  }
   // Meteor.publish("banksWithCustomers", function(){
   //   if(this.userId){
   //     var game = Games.findOne({ players: this.userId, ongoing: true });
