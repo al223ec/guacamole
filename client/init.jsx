@@ -1,5 +1,5 @@
 Meteor.subscribe("banks");
-
+console.log("init")
 Accounts.onLogin(function() {
   var redirect;
   redirect = Session.get('redirectAfterLogin');
@@ -11,4 +11,5 @@ Accounts.onLogin(function() {
 });
 
 Meteor.startup(function () {
+  console.log("Meteor startup");
 });

@@ -47,6 +47,7 @@ GameStartPage = React.createClass({
     return (
       <div>
         Start { bank.name } interest: { bank.interest }
+        growthRate { bank.growthRate } customersCount { bank.customersCount }
 
         <form onSubmit={ this.handleSubmit }>
          <AuthErrors errors={ this.state.errors } />

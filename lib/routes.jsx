@@ -4,7 +4,8 @@ var authenticated = FlowRouter.group({
   triggersEnter: [function(context, redirect){
     if (!(Meteor.loggingIn() || Meteor.userId())) {
       var route = FlowRouter.current();
-      console.log("not logged in")
+      console.error("not logged in");
+
       if(route.route.name !== 'Login'){
         Session.set('redirectAfterLogin', route.path);
       }
@@ -44,7 +45,6 @@ exposed.route("/register", {
   }
 });
 
-
 authenticated.route("/game/:game_id", {
   name: "Game",
   action(params){
@@ -64,19 +64,19 @@ gameRoutes.route('/start', {
   },
 });
 
-authenticated.route("/bank/:id", {
-  name: "Bank",
-  action(params){
-    renderMainLayoutWith(<BankEditor bankId={ params.id } />);
-  }
-});
-
-authenticated.route("/dashboard", {
-  name: "Dashboard",
-  action(params){
-    renderMainLayoutWith(<GameStateManager />);
-  }
-});
+// authenticated.route("/bank/:id", {
+//   name: "Bank",
+//   action(params){
+//     renderMainLayoutWith(<BankEditor bankId={ params.id } />);
+//   }
+// });
+//
+// authenticated.route("/dashboard", {
+//   name: "Dashboard",
+//   action(params){
+//     renderMainLayoutWith(<GameStateManager />);
+//   }
+// });
 
 function renderMainLayoutWith(component){
   ReactLayout.render(MainLayout, {

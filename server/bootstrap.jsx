@@ -30,7 +30,8 @@ Meteor.startup(() => {
     Games.insert({
       ongoing: true,
       players: players,
-      name : "BankGameName"
+      name : "BankGameName",
+      time : 0
     });
   }
 
@@ -40,7 +41,10 @@ Meteor.startup(() => {
           Banks.insert({
             owner: user._id,
             gameId: Games.findOne({ players: user._id })._id,
-            name: "My bootstrapped bank " + user.profile.name
+            name: "My bootstrapped bank " + user.profile.name,
+            interest: 3,
+            customersCount: 100,
+            growthRate: 0,
           });
 
           for(var i = 0; i < 100; i++){
