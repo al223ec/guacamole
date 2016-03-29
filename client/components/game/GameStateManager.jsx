@@ -1,4 +1,8 @@
 GameStateManager = React.createClass({
+  propTypes: {
+    gameId: React.PropTypes.string.isRequired,
+    gameState: React.PropTypes.string.isRequired
+  },
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -11,7 +15,7 @@ GameStateManager = React.createClass({
     // Bör börja med att endast fetcha ett game, göra en begränsning att inga nya spel kan överhuvudtaget skapas, endast ett som första version
     return {
       loading: ! handle.ready(),
-      game: Games.findOne( { players: Meteor.userId(), ongoing: true } ),
+      game: Games.findOne( { players: Meteor.userId(), ongoing: true } ), //({ id: this.props.gameId }),
       currentUser: Meteor.user(),
       // currentUserBank: Banks.findOne({ owner: Meteor.userId(), gameId: gameId })
     };
@@ -25,6 +29,14 @@ GameStateManager = React.createClass({
   // StopGame
   // RestartGame
   // <Game key={ game._id } game={ game } />
+  getGameState: function(){
+    switch (this.props.gameState) {
+      case "toplist":
+        return <Toplist game={ this.data.game } />
+      default:
+        return <GameStartPage gameId={ this.props.gameId } />
+    }
+  },
   render(){
     if (this.data.loading) {
       return <LoadingSpinner />;
@@ -50,7 +62,7 @@ GameStateManager = React.createClass({
               </ul>
             </div>
           </div>
-          <section> { this.props.myChildComponent } </section>
+          <section> { this.getGameState() } </section>
       </div>
     )
   }

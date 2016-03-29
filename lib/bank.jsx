@@ -32,10 +32,9 @@ _.extend(Bank.prototype, {
 
   },
   getCustomersCount: function(){
-    return this.customersCount == null || isNaN( this.customersCount) ? 0 :  this.customersCount;
+    return this.customersCount == null || isNaN( this.customersCount) ? 0 : this.customersCount;
   },
   getGrowthRate: function(){
-    return this.growthRate == null || isNaN( this.growthRate) ? 0 :  this.growthRate;
+    return this.growthRate == null || isNaN( this.growthRate) ? 0 : this.growthRate;
   }
-
 });

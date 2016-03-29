@@ -7,12 +7,6 @@ Banks = new Mongo.Collection("banks", {
 });
 
 Customers = new Mongo.Collection("customers");
-// Games.currentGame = function(){
-//   return Games.findOne({ players: Meteor.userId(), ongoing: true });
-// }
-// Games.isPlayer = function(){
-//   return Games.findOne({ players: Meteor.userId(), ongoing: true }) !== null;
-// }
 
 if (Meteor.isServer) {
   var gameTickTime = 5000;
@@ -23,11 +17,6 @@ if (Meteor.isServer) {
     }
   });
 
-  // var games = Games.find({ ongoing: true } );
-  // console.log(games.count());
-  // games.map((game) =>{
-  //   setInterval(gameTick(game), gameTickTime);
-  // });
   /*
   Meteor.publish("game", function(){
     if(this.userId){

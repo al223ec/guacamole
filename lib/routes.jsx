@@ -60,7 +60,14 @@ var gameRoutes = authenticated.group({
 gameRoutes.route('/start', {
   name: "Start",
   action(params){
-    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } myChildComponent=<GameStartPage gameId={ params.game_id }/> />);
+    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } gameState="startPage" />);
+  },
+});
+
+gameRoutes.route('/toplist', {
+  name: "Toplist",
+  action(params){
+    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } gameState="toplist" />);
   },
 });
 
