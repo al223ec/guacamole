@@ -2,10 +2,12 @@ Header = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
     var handle = Meteor.subscribe("games");
+
+    console.log(Roles.userIsInRole(Meteor.userId(), 'admin'));
     return {
       loading: ! handle.ready(),
       currentUser: Meteor.user(),
-      game: Games.findOne( { players: Meteor.userId(), ongoing: true } ),
+      game: Roles.userIsInRole(Meteor.userId(), 'admin') ? Games.findOne({ ongoing: true }) : Games.findOne( { players: Meteor.userId(), ongoing: true } ),
     //  bank: Banks.find({ owner: Meteor.userId() }).fetch(),
     //  game: Games.findOne( { players: Meteor.userId(), ongoing: true } )
     }
@@ -24,7 +26,7 @@ Header = React.createClass({
       if (this.data.loading) {
         return <LoadingSpinner />;
       }
-      
+
       navigation = (
         <ul>
           <li><a href="/">Home</a></li>

@@ -13,7 +13,7 @@ if (Meteor.isServer) {
 
   Meteor.publish("games", function () {
     if(this.userId){
-      return Games.find({ players: this.userId, ongoing: true } );
+      return Roles.userIsInRole(this.userId, 'admin') ? Games.find({ ongoing: true } ) : Games.find({ players: this.userId, ongoing: true } );
     }
   });
 
@@ -25,15 +25,33 @@ if (Meteor.isServer) {
   });*/
 
   Meteor.publish("banks", function(){
-    if(this.userId){
+    if (! this.userId) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    if(Roles.userIsInRole(this.userId, 'player')){
       var game = Games.findOne({ players: this.userId, ongoing: true });
+    }else {
+      var game = Games.findOne({ ongoing: true })
+    }
+
+    if(game != null){
       return Banks.find({ owner: { $in: game.players }, gameId: game._id });
     }
   });
 
   Meteor.publish("players", function(){
-    if(this.userId){
+    if (! this.userId) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    if(Roles.userIsInRole(this.userId, 'player')){
       var game = Games.findOne({ players: this.userId, ongoing: true });
+    }else{
+      var game = Games.findOne({ ongoing: true })
+    }
+
+    if(game != null){
       return Meteor.users.find({ _id: { $in: game.players }, roles: "player" });
     }
   });
@@ -84,6 +102,13 @@ Meteor.methods({
       savings: 50000,
       bankId: bank._id
     });
+  },
+  resetGame(gameId){
+    if (! Meteor.userId() ) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    console.log(Meteor.user)
   }
 });
 

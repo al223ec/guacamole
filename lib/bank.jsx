@@ -22,10 +22,10 @@ _.extend(Bank.prototype, {
   },
   addGrowthRateAndCustomers: function(growthRate){},
   addGrowthRate: function(growthRate){
-    var _growthRate = growthRate > 1 || growthRate < - 1  ? growthRate  - Math.round(growthRate) : growthRate;
+    var _growthRate = growthRate > 1 || growthRate < - 1  ? growthRate - Math.round(growthRate) : growthRate;
 
     Banks.update(this._id, {
-      $set: { growthRate: this.getGrowthRate() + _growthRate, customersCount:  this.getCustomersCount() + Math.round(growthRate) }
+      $set: { growthRate: _growthRate, customersCount:  this.getCustomersCount() + Math.round(growthRate) }
     });
   },
   addCustomers: function(numberOfCustomers){

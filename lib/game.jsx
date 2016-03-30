@@ -9,13 +9,22 @@ _.extend(Game.prototype, {
     Games.update(this._id, { $set: { ongoing: true } });
   },
   reset: function(){
+    var bankIds = this.players.map((player, index, originalCursor) =>{
+      return Banks.findOne({ owner: player, gameId: game._id })._id;
+    });
+    
+    console.log(bankIds);
     Games.update(game._id,  { $set: { time: 0 } });
   },
   stop: function(){
-
+    Games.update(this._id, { $set: { ongoing: false } });
   },
   tick: function(){
     var game = this;
+    if(!game.ongoing){
+      return
+    }
+
     var time = game.time == null || isNaN(game.time) ? 0 : game.time +=1;
     Games.update(game._id,  { $set: { time: time } });
 
