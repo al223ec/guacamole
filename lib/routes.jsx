@@ -18,8 +18,9 @@ var authenticatedAdmin = authenticated.group({
   prefix: '/admin',
   name: 'Admin',
   triggersEnter: [function(context, redirect) {
-    if (!Roles.userIsInRole(Meteor.user(), ['admin'])) {
-      return FlowRouter.go(FlowRouter.path('Dashboard'));
+    if (! Roles.userIsInRole(Meteor.userId(), 'admin')) {
+      console.error("User not admin");
+      FlowRouter.go('Home');
     }
   }]
 });
@@ -48,7 +49,7 @@ exposed.route("/register", {
 authenticated.route("/game/:game_id", {
   name: "Game",
   action(params){
-    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } />);
+    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } gameState="startPage" />);
   }
 });
 
@@ -71,6 +72,12 @@ gameRoutes.route('/toplist', {
   },
 });
 
+authenticatedAdmin.route("/", {
+  name: "AdminDashboard",
+  action(params){
+    renderMainLayoutWith(<GameStateManager gameState="admin" />);
+  }
+});
 // authenticated.route("/bank/:id", {
 //   name: "Bank",
 //   action(params){

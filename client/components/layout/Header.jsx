@@ -3,13 +3,11 @@ Header = React.createClass({
   getMeteorData(){
     var handle = Meteor.subscribe("games");
 
-    console.log(Roles.userIsInRole(Meteor.userId(), 'admin'));
     return {
       loading: ! handle.ready(),
       currentUser: Meteor.user(),
-      game: Roles.userIsInRole(Meteor.userId(), 'admin') ? Games.findOne({ ongoing: true }) : Games.findOne( { players: Meteor.userId(), ongoing: true } ),
-    //  bank: Banks.find({ owner: Meteor.userId() }).fetch(),
-    //  game: Games.findOne( { players: Meteor.userId(), ongoing: true } )
+      game: Roles.userIsInRole(Meteor.userId(), 'admin') ? null : Games.findOne( { players: Meteor.userId(), ongoing: true } ),
+      isAdmin: Roles.userIsInRole(Meteor.userId(), 'admin')
     }
   },
   handleLogout(){
@@ -20,7 +18,7 @@ Header = React.createClass({
 
   render(){
     let navigation;
-    let { currentUser, game } = this.data;
+    let { currentUser, game, isAdmin } = this.data;
 
     if(currentUser){
       if (this.data.loading) {
@@ -31,7 +29,7 @@ Header = React.createClass({
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="#" onClick={ this.handleLogout }>Logout</a></li>
-          <li><a href={ "/game/" + game._id }> Play! </a></li>
+          <li><a href={ game !== null ? "/game/" + game._id : "/admin/" } > { isAdmin ? "Dashboard" : "Play!" } </a></li>
         </ul>
       )
     }else{
