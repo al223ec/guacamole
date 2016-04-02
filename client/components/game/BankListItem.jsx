@@ -13,13 +13,21 @@ BankListItem = React.createClass({
     let { bank, player } = this.props;
     const bankClassName = (this.data.currentUser._id == bank.owner ? "bank-list-item highlighted" : "bank-list-item");
 
-    return (<div>
-        <span>player: { player.profile.name } bank: { bank ? bank.name : "No bank registered!" } </span>
-        <ul>
-          <li>interest: { bank.interest }</li>
-          <li>growthRate: { bank.growthRate }</li>
-          <li>customersCount: { bank.customersCount }</li>
-        </ul>
+    return (<div className={ bankClassName }>
+        <div className="heading">
+          player: <strong>{ player.profile.name }</strong> bank: <strong>{ bank ? bank.name : "No bank registered!" } </strong>
+        </div>
+
+        <div className="info">
+          <ul>
+            <li>interest: <strong>{ bank.interest } </strong></li>
+            <li>growthRate: <strong>{ bank.growthRate } </strong></li>
+            <li>customersCount: <strong>{ bank.customersCount } </strong></li>
+          </ul>
+        </div>
+        <div className="results">
+          { bank.profitAndLoss() }
+        </div>
       </div>);
   }
 });

@@ -2,23 +2,6 @@ Game = function (doc) {
   _.extend(this, doc);
 };
 _.extend(Game.prototype, {
-  pause: function(){
-    Games.update(this._id, { $set: { ongoing: false } });
-  },
-  start: function(){
-    Games.update(this._id, { $set: { ongoing: true } });
-  },
-  reset: function(){
-    var bankIds = this.players.map((player, index, originalCursor) =>{
-      return Banks.findOne({ owner: player, gameId: game._id })._id;
-    });
-    
-    console.log(bankIds);
-    Games.update(game._id,  { $set: { time: 0 } });
-  },
-  stop: function(){
-    Games.update(this._id, { $set: { ongoing: false } });
-  },
   tick: function(){
     var game = this;
     if(!game.ongoing){
@@ -46,29 +29,8 @@ _.extend(Game.prototype, {
       var growthRate = bank.getCompareValue() - middleValue;
       bank.addGrowthRate(growthRate);
     });
+  },
+  getTime: function(){
+    return this.time == null || isNaN(this.time) ? 0 : this.time;
   }
-
-  /*********** Calculate customers ***********
-  1000/banks
-  1 + 10 %
-  2 + 8 %
-  3 + 6 %
-  4 + 4 %
-  5 + 2 %
-  6 + 1 %
-  7 -
-  (leader - loser)/100 * bank.value()
-   21/100
-  (leader - loser)/2 == middleValue
-
-  Number of banks == 10
-  Number of banks == 5
-  Customers moving = 25 %
-  ############## 5 12.5 %
-  1 + 15 %
-  2 + 5 %
-  3 - 0 %
-  4 - 5 %
-  5 - 15 %
-  */
 });

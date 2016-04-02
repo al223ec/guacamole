@@ -44,19 +44,34 @@ GameStartPage = React.createClass({
     if (this.data.loading) {
       return <LoadingSpinner />;
     }
-    return (
-      <div>
-        Start { bank.name } interest: { bank.interest }
-        growthRate { bank.growthRate } customersCount { bank.customersCount }
+    return (<div>
+        <span>Startpage</span>
+        <div className="bank-list-item">
+        <div className="heading">
+          bank: <strong>{ bank ? bank.name : "No bank registered!" } </strong>
+        </div>
 
-        <form onSubmit={ this.handleSubmit }>
-         <AuthErrors errors={ this.state.errors } />
-
-         <FormInput hasError={!!this.state.errors.name} name="name" type="text" label="Name" value={ bank.name } />
-         <FormInput hasError={!!this.state.errors.interest} name="interest" type="number" step="0.01" label="Interest" value={ bank.interest }/>
-         <input type="submit" value="Update"/>
-         </form>
+        <div className="info">
+          <ul>
+            <li><div><span className="meta">interest:</span> <strong>{ bank.interest } </strong></div></li>
+            <li><div><span className="meta">growthRate:</span> <strong>{ bank.growthRate } </strong></div></li>
+            <li><div><span className="meta">customersCount:</span> <strong>{ bank.customersCount } </strong></div></li>
+          </ul>
+        </div>
+        <div className="results">
+          { bank.profitAndLoss() }
+          </div>
       </div>
-    )
+
+      <form className="update-bank" onSubmit={ this.handleSubmit }>
+       <div className="heading">Update bank</div>
+
+       <AuthErrors errors={ this.state.errors } />
+
+       <FormInput hasError={!!this.state.errors.name} name="name" type="text" label="Name" value={ bank.name } />
+       <FormInput hasError={!!this.state.errors.interest} name="interest" type="number" step="0.01" label="Interest" value={ bank.interest }/>
+       <input type="submit" value="Update"/>
+       </form>
+      </div>);
   }
 });

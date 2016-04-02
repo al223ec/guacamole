@@ -15,11 +15,11 @@ AdminGameListItem = React.createClass({
       players: Meteor.users.find({ _id: { $in: this.props.game.players } }).fetch()
     };
   },
-  // KickPlayer
+  // Update gameName
   handleSubmit(event) {
     event.preventDefault();
     var name = $(event.target).find("[name=name]").val();
-
+    console.log("submitted")
     var errors = {};
 
     if (!name) {
@@ -33,12 +33,26 @@ AdminGameListItem = React.createClass({
     if (! _.isEmpty(errors)) {
       return;
     }
+
+    Meteor.call("updateGame", { gameId: this.props.game._id, name : name });
   },
-  pauseGame: function(gameId){
-    return function(e){
-      e.preventDefault();
-      console.log("Pause game", gameId)
-    }
+  pauseGame: function(e){
+    e.preventDefault();
+    Meteor.call("pauseGame",  this.props.game._id);
+  },
+  resetGame: function(e){
+    e.preventDefault();
+    Meteor.call("resetGame",  this.props.game._id);
+  },
+  startGame: function(e){
+    e.preventDefault();
+    Meteor.call("startGame", this.props.game._id);
+  },
+  kickPlayer: function(playerId){
+
+  },
+  addPlayer: function(playerId){
+
   },
   render(){
     if (this.data.loading) {
@@ -48,25 +62,40 @@ AdminGameListItem = React.createClass({
     let{ players } = this.data;
     let { game } = this.props;
 
+    var gameActions;
+
+    if(game.ongoing){
+      gameActions = (<li><a href="" onClick={ this.pauseGame }> Pause Game </a></li>)
+    }else{
+      gameActions = (<li><a href="" onClick={ this.startGame }> Start Game</a></li>)
+    }
+
     return (
       <div>
-        <span> { game.name } time: { game.time } { game.ongoing ? "Live" : "Game is paused" } </span>
-        <a href onClick={ this.pauseGame(game._id)}> Pause Game </a>
+        <div className="game-meta">
+          <h3> { game.name }</h3>
+          <span className="time">time: { game.time } </span>
+          <span className="ongoing">{ game.ongoing ? "Live" : "Game is paused" } </span>
+        </div>
 
-        <ul>{
+        <ul className="game-actions">
+          { gameActions }
+          <li> <a href="" onClick={ this.resetGame }> Reset Game</a> </li>
+        </ul>
+
+        <ul className="player-list">{
           players.map((player) => {
-            return (<li>{ player.profile.name } <a href>Kick</a></li>)
+            return (<li>{ player.profile.name }</li>)
           })
         }
           <li><a href>Add player</a></li>
         </ul>
-
+        <h4> Update game info </h4>
         <form onSubmit={ this.handleSubmit }>
          <AuthErrors errors={ this.state.errors } />
          <FormInput hasError={!!this.state.errors.name} name="name" type="text" label="Name" value={ game.name }/>
          <input type="submit" value="Update"/>
          </form>
-      </div>
-    )
+      </div>)
   }
 });

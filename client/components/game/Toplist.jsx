@@ -12,6 +12,7 @@ Toplist = React.createClass({
     var gameId = this.props.game._id;
 
     Meteor.subscribe("players");
+        Meteor.subscribe("banks");
     var handle = Meteor.subscribe("players");
 
     return {
@@ -23,17 +24,13 @@ Toplist = React.createClass({
       }),
     }
   },
-  renderBankPlayerList(){
-    return
-  },
   render(){
     if (this.data.loading) {
       return <LoadingSpinner />;
     }
 
     let { players } = this.data;
-    return (
-      <div>
+    return (<div>
         <h2>Toplist</h2>
         { this.data.players.map((player) => {
           return <BankListItem

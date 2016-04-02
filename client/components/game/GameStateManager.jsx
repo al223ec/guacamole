@@ -16,7 +16,7 @@ GameStateManager = React.createClass({
 
     return {
       loading: ! handle.ready(),
-      game: Roles.userIsInRole(Meteor.userId(), 'admin') ? Games.findOne({ ongoing: true }) : Games.findOne( { players: Meteor.userId(), ongoing: true } ), //({ id: this.props.gameId }),
+      game: Roles.userIsInRole(Meteor.userId(), 'admin') ? Games.findOne() : Games.findOne( { players: Meteor.userId() } ), //({ id: this.props.gameId }),
       currentUser: Meteor.user(),
       isAdmin: Roles.userIsInRole(Meteor.userId(), 'admin')
     };
@@ -46,9 +46,6 @@ GameStateManager = React.createClass({
     }else {
       var gameNavigation = (<ul>
        <li><span className='icon icon-briefcase'></span><a href={ "/game/" + game._id + "/start" }>Start</a></li>
-       <li><a href={ "/game/" + game._id + "/interests" }>Räntor</a></li>
-       <li>Avgifter</li>
-       <li>Marknad</li>
        <li><a href={ "/game/" + game._id + "/toplist" }>Toplista</a></li>
      </ul>)
     }

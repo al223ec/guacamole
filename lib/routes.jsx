@@ -18,6 +18,7 @@ var authenticatedAdmin = authenticated.group({
   prefix: '/admin',
   name: 'Admin',
   triggersEnter: [function(context, redirect) {
+    console.log( Roles.userIsInRole(Meteor.userId(), 'admin'))
     if (! Roles.userIsInRole(Meteor.userId(), 'admin')) {
       console.error("User not admin");
       FlowRouter.go('Home');

@@ -20,21 +20,28 @@ _.extend(Bank.prototype, {
     var interest = this.interest ? this.interest : 3;
     return 10 - interest;
   },
-  addGrowthRateAndCustomers: function(growthRate){},
   addGrowthRate: function(growthRate){
-    var _growthRate = growthRate > 1 || growthRate < - 1  ? growthRate - Math.round(growthRate) : growthRate;
+    // var _growthRate = growthRate > 1 || growthRate < - 1  ? growthRate - Math.round(growthRate) : growthRate;
+    var calculatedGrowtRate = this.getGrowthRate() + growthRate;
+    calculatedGrowtRate -=  Math.floor(this.getGrowthRate()); // customersToAdd > 0 ? calculatedGrowtRate = calculatedGrowtRate - customersToAdd : calculatedGrowtRate -= customersToAdd;
+
+    var customersToAdd = this.getCustomersCount() + Math.floor(this.getGrowthRate());
+    customersToAdd = customersToAdd < 0 ? 0 : customersToAdd;
 
     Banks.update(this._id, {
-      $set: { growthRate: _growthRate, customersCount:  this.getCustomersCount() + Math.round(growthRate) }
+      $set: { growthRate: calculatedGrowtRate, customersCount: customersToAdd }
     });
-  },
-  addCustomers: function(numberOfCustomers){
-
   },
   getCustomersCount: function(){
     return this.customersCount == null || isNaN( this.customersCount) ? 0 : this.customersCount;
   },
   getGrowthRate: function(){
     return this.growthRate == null || isNaN( this.growthRate) ? 0 : this.growthRate;
+  },
+  profitAndLoss: function(){
+    return "10000"
+  },
+  calculateProfitAndLoss: function(){
+
   }
 });

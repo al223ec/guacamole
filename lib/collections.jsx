@@ -9,20 +9,11 @@ Banks = new Mongo.Collection("banks", {
 Customers = new Mongo.Collection("customers");
 
 if (Meteor.isServer) {
-  var gameTickTime = 5000;
-
   Meteor.publish("games", function () {
     if(this.userId){
-      return Roles.userIsInRole(this.userId, 'admin') ? Games.find({ ongoing: true } ) : Games.find({ players: this.userId, ongoing: true } );
+      return Roles.userIsInRole(this.userId, 'admin') ? Games.find({}) : Games.find({ players: this.userId } );
     }
   });
-
-  /*
-  Meteor.publish("game", function(){
-    if(this.userId){
-      return Games.findOne({ players: this.userId, ongoing: true });
-    }
-  });*/
 
   Meteor.publish("banks", function(){
     if (! this.userId) {
@@ -30,9 +21,9 @@ if (Meteor.isServer) {
     }
 
     if(Roles.userIsInRole(this.userId, 'player')){
-      var game = Games.findOne({ players: this.userId, ongoing: true });
+      var game = Games.findOne({ players: this.userId });
     }else {
-      var game = Games.findOne({ ongoing: true })
+      var game = Games.findOne({ })
     }
 
     if(game != null){
@@ -46,9 +37,9 @@ if (Meteor.isServer) {
     }
 
     if(Roles.userIsInRole(this.userId, 'player')){
-      var game = Games.findOne({ players: this.userId, ongoing: true });
+      var game = Games.findOne({ players: this.userId });
     }else{
-      var game = Games.findOne({ ongoing: true })
+      var game = Games.findOne({})
     }
 
     if(game != null){
@@ -79,12 +70,6 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  getBanks(){
-    if (! Meteor.userId()) {
-      throw new Meteor.Error("not-authorized");
-    }
-    //return Banks.find({ game: Games.currentGame()._id });
-  },
   updateBank(clientBank){
     var bank = Banks.findOne(clientBank.bankId);
     if ( bank.owner !== Meteor.userId()) {
@@ -92,7 +77,14 @@ Meteor.methods({
     }
     Banks.update(clientBank.bankId,  { $set: { interest: clientBank.interest, name: clientBank.name } });
   },
-  addCustomer(bankId){
+  updateGame(clientGame){
+    if (! Meteor.userId() || !Roles.userIsInRole(Meteor.userId(), 'admin') ) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    Games.update(clientGame.gameId,  { $set: { name: clientGame.name } });
+  },
+/*  addCustomer(bankId){
     if (! Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
@@ -102,13 +94,31 @@ Meteor.methods({
       savings: 50000,
       bankId: bank._id
     });
-  },
+  },*/
   resetGame(gameId){
-    if (! Meteor.userId() ) {
+    if (! Meteor.userId() || !Roles.userIsInRole(Meteor.userId(), 'admin') ) {
       throw new Meteor.Error("not-authorized");
     }
 
-    console.log(Meteor.user)
+    game = Games.findOne(gameId)
+    game.players.map((player, index, originalCursor) =>{
+      Banks.update(Banks.findOne({ owner: player, gameId: game._id })._id, { $set: { customersCount: 100, growthRate: 0 }});
+    });
+
+    Games.update(game._id,  { $set: { time: 0 } });
+    // game.reset();
+  },
+  pauseGame(gameId){
+    if (! Meteor.userId() || !Roles.userIsInRole(Meteor.userId(), 'admin') ) {
+      throw new Meteor.Error("not-authorized");
+    }
+    Games.update(gameId, { $set: { ongoing: false } });
+  },
+  startGame(gameId){
+    if (! Meteor.userId() || !Roles.userIsInRole(Meteor.userId(), 'admin') ) {
+      throw new Meteor.Error("not-authorized");
+    }
+    Games.update(gameId, { $set: { ongoing: true } });
   }
 });
 

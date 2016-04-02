@@ -6,7 +6,7 @@ Header = React.createClass({
     return {
       loading: ! handle.ready(),
       currentUser: Meteor.user(),
-      game: Roles.userIsInRole(Meteor.userId(), 'admin') ? null : Games.findOne( { players: Meteor.userId(), ongoing: true } ),
+      game: Roles.userIsInRole(Meteor.userId(), 'admin') ? null : Games.findOne( { players: Meteor.userId() } ),
       isAdmin: Roles.userIsInRole(Meteor.userId(), 'admin')
     }
   },
