@@ -20,13 +20,25 @@ BankListItem = React.createClass({
 
         <div className="info">
           <ul>
-            <li>interest: <strong>{ bank.interest } </strong></li>
-            <li>growthRate: <strong>{ bank.growthRate } </strong></li>
-            <li>customersCount: <strong>{ bank.customersCount } </strong></li>
+            <li><strong>Bank info</strong></li>
+            <li><div><span className="meta">interest:</span> <strong>{ bank.interest } </strong></div></li>
+            <li><div><span className="meta">growthRate:</span> <strong>{ bank.growthRate } </strong></div></li>
+            <li><div><span className="meta">customersCount:</span> <strong>{ bank.customersCount } </strong></div></li>
           </ul>
         </div>
         <div className="results">
-          { bank.profitAndLoss() }
+          <table>
+            <thead><tr><th colSpan="2">Profit and loss</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>T</td><td>C</td>
+              </tr>
+              { bank.profitAndLosses.map((profitAndLoss) => {
+                console.log(arguments)
+                return (<tr><td>{ profitAndLoss.time }</td> <td>{ profitAndLoss.customersCount }</td></tr>)
+              })}
+          </tbody>
+        </table>
         </div>
       </div>);
   }

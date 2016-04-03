@@ -40,24 +40,27 @@ GameStateManager = React.createClass({
     }
 
     let { game, currentUser, isAdmin } = this.data;
+    var gameNavigation;
+    var gameMeta;
 
     if(isAdmin){
-      var gameNavigation = (<ul><li>Administrator</li></ul>)
+      gameNavigation = (<ul><li>Administrator</li></ul>);
     }else {
-      var gameNavigation = (<ul>
-       <li><span className='icon icon-briefcase'></span><a href={ "/game/" + game._id + "/start" }>Start</a></li>
-       <li><a href={ "/game/" + game._id + "/toplist" }>Toplista</a></li>
-     </ul>)
+      gameNavigation = (<ul>
+        <li><span className='icon icon-briefcase'></span><a href={ "/game/" + game._id + "/start" }>Start</a></li>
+        <li><a href={ "/game/" + game._id + "/toplist" }>Toplist</a></li>
+      </ul>);
+      gameMeta = (<ul>
+        <li><span className="heading"> { game.name } </span></li>
+        <li> Tid: { game.time } </li>
+        <li>{ game.ongoing ? "Live" : "Game is paused" }</li>
+      </ul>);
     }
 
     return (
       <div className="game">
         <div className="container game-meta">
-          <span className="heading"> { game.name } </span>
-          <ul>
-            <li>Tid: { game.time } </li>
-            <li>{ game.ongoing ? "Live" : "Game is paused" }</li>
-          </ul>
+          { gameMeta }
         </div>
 
         <div className="game-navigation-container">

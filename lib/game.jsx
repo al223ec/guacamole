@@ -9,6 +9,7 @@ _.extend(Game.prototype, {
     }
 
     var time = game.time == null || isNaN(game.time) ? 0 : game.time +=1;
+
     Games.update(game._id,  { $set: { time: time } });
 
     var banks = this.players.map((player, index, originalCursor) =>{
@@ -28,6 +29,9 @@ _.extend(Game.prototype, {
     banks.map((bank) => {
       var growthRate = bank.getCompareValue() - middleValue;
       bank.addGrowthRate(growthRate);
+      if(time % 25 == 0){
+        bank.calculateProfitAndLoss(time)
+      }
     });
   },
   getTime: function(){

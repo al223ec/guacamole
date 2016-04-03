@@ -40,29 +40,14 @@ GameStartPage = React.createClass({
     Meteor.call("updateBank", { bankId: this.data.bank._id, name : name, interest: interest });
   },
   render(){
-    let { bank } = this.data;
+    let { bank, currentUser } = this.data;
     if (this.data.loading) {
       return <LoadingSpinner />;
     }
     return (<div>
         <span>Startpage</span>
-        <div className="bank-list-item">
-        <div className="heading">
-          bank: <strong>{ bank ? bank.name : "No bank registered!" } </strong>
-        </div>
-
-        <div className="info">
-          <ul>
-            <li><div><span className="meta">interest:</span> <strong>{ bank.interest } </strong></div></li>
-            <li><div><span className="meta">growthRate:</span> <strong>{ bank.growthRate } </strong></div></li>
-            <li><div><span className="meta">customersCount:</span> <strong>{ bank.customersCount } </strong></div></li>
-          </ul>
-        </div>
-        <div className="results">
-          { bank.profitAndLoss() }
-          </div>
-      </div>
-
+        <BankListItem bank={ bank } player={ currentUser } />;
+        
       <form className="update-bank" onSubmit={ this.handleSubmit }>
        <div className="heading">Update bank</div>
 

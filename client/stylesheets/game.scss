@@ -74,5 +74,20 @@ div.bank-list-item{
   }
   div.results{
     @include span-columns(8);
+    padding-top: $gutter/2;
+    padding-bottom: $gutter/2;
+
+    table{
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      border-collapse:collapse;
+
+      tbody{
+        text-align: center;
+        tr {
+          border-top: 1px solid #ccc;
+        }
+      }
+    }
   }
 }

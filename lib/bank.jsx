@@ -41,7 +41,10 @@ _.extend(Bank.prototype, {
   profitAndLoss: function(){
     return "10000"
   },
-  calculateProfitAndLoss: function(){
-
+  calculateProfitAndLoss: function(time){
+    console.log("calculateProfitAndLoss")
+    Banks.update(this._id, {
+      $push: { profitAndLosses: { time: time, customersCount: this.customersCount } }
+    });
   }
 });
