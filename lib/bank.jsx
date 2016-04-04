@@ -17,8 +17,40 @@ _.extend(Bank.prototype, {
   },
   getCompareValue: function(){
     // Beräkna ett värde som kommer omvandlas till en procentuell andel kunder i förhållande till andra banker
-    var interest = this.interest ? this.interest : 3;
+    var interest = this.interest.list ? this.interest.list : 3;
     return 10 - interest;
+  },
+  tick: function(){
+    /* Tillgångar
+
+    TotalBolåneVolym * ränta
+    kundStock.bolån * kundstock.antalKunder = BolåneVolym
+    BolåneVolym * ranta/365 = RänteIntäktBolånePerDag
+
+    Interest income mortgages
+
+    Blanco * blancoränat  / 365
+
+    Överlikvid 20% av bolåneVolym + blanco  / 365
+    Överlikvid * riksbanksräntan / 365
+
+    // == Ränteintäkt
+
+    Skulder
+    lönekonto * lönekonto_räntan / 365
+    Sparkonto * sparkonto_ränta  / 365
+    extern finanserign * (riksbanksräntan + 0.5) / 365
+
+    == räntekostnad
+
+    ränteintäkt - räntekonstnad = räntenetto
+
+    (( räntenetto / tillångar)/365) * 30
+    */
+    /** Dagränta
+      Volym*ränta/365
+
+    */
   },
   addGrowthRate: function(growthRate){
     // var _growthRate = growthRate > 1 || growthRate < - 1  ? growthRate - Math.round(growthRate) : growthRate;

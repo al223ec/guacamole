@@ -41,19 +41,33 @@ Meteor.startup(() => {
           Banks.insert({
             owner: user._id,
             gameId: Games.findOne({ players: user._id })._id,
-            name: "My bootstrapped bank " + user.profile.name,
-            interest: 3,
-            customersCount: 100,
+            name: "Bank for" + user.profile.name,
+            
+            interest: { list: 0, riskOne: 1, riskTwo: 2, riskThree: 3, riskFour: 4, riskFive: 5, riskSix: 6 },
+            customersCount: 150,
             growthRate: 0,
+            profitAndLosses: [],
+            interestIncomes: [],
+            interestExpense: []
           });
+      });
+  }
 
-          for(var i = 0; i < 100; i++){
+  if(Customers.find().count() === 0){
+    Meteor.users.find({ roles: "player" }).map(
+      function(user, index, originalCursor){
+        for(var j = 0; j < 6; j++){
+          for(var i = 0; i < 25; i++){
             Customers.insert({
-              loan: 1500000,
+              riskClass: j+1,
+              mortgages: 1500000,
               savings: 50000,
+              customersCount: 100,
+              blanco: 2000,
               bankId: Banks.findOne({ owner: user._id })._id
             });
           }
-      });
+        }
+    });
   }
 });

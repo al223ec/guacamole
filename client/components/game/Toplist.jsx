@@ -11,8 +11,7 @@ Toplist = React.createClass({
   getMeteorData() {
     var gameId = this.props.game._id;
 
-    Meteor.subscribe("players");
-        Meteor.subscribe("banks");
+    Meteor.subscribe("banks");
     var handle = Meteor.subscribe("players");
 
     return {

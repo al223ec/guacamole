@@ -7,9 +7,11 @@ Banks = new Mongo.Collection("banks", {
 });
 
 Customers = new Mongo.Collection("customers");
+
 // ProfitAndLoss = new Mongo.Collection("profitAndLoss");
 
 if (Meteor.isServer) {
+
   Meteor.publish("games", function () {
     if(this.userId){
       return Roles.userIsInRole(this.userId, 'admin') ? Games.find({}) : Games.find({ players: this.userId } );
@@ -104,7 +106,7 @@ Meteor.methods({
     game.players.map((player, index, originalCursor) =>{
       Banks.update(Banks.findOne({ owner: player, gameId: game._id })._id, { $set: { customersCount: 100, growthRate: 0, profitAndLosses: [] }});
     });
-    
+
     Games.update(game._id,  { $set: { time: 0, ongoing: false } });
     // game.reset();
   },

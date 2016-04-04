@@ -15,8 +15,9 @@ FormInput = React.createClass({
     render() {
         const {type, label, name, value, onKeyUp, onBlur, step } = this.props;
         let inputType;
-
+        
         var className = "form-group";
+
         if (this.props.hasError) {
             className += " has-error";
         }
