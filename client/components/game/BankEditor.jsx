@@ -1,6 +1,6 @@
 BankEditor = React.createClass({
   propTypes: {
-    bankId: React.PropTypes.string.isRequired
+    bank: React.PropTypes.object.isRequired
   },
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -9,25 +9,30 @@ BankEditor = React.createClass({
     }
   },
   getMeteorData() {
-    return {
-      currentUser: Meteor.user(),
-      bank: Banks.findOne({ _id: this.props.bankId })
-    }
+    return { }
   },
   handleSubmit(event) {
     event.preventDefault();
-    var name = $(event.target).find("[name=name]").val();
-    var interest = $(event.target).find("[name=interest]").val();
-    console.log(name);
-    
     var errors = {};
+
+    var name = $(event.target).find("[name=name]").val();
+    var interest = {
+      list: $(event.target).find("[name=list]").val(),
+      risk_one: $(event.target).find("[name=risk_one]").val(),
+      risk_two: $(event.target).find("[name=risk_two]").val(),
+      risk_three: $(event.target).find("[name=risk_three]").val(),
+      risk_four: $(event.target).find("[name=risk_four]").val(),
+      risk_five: $(event.target).find("[name=risk_five]").val(),
+      risk_six: $(event.target).find("[name=risk_six]").val()
+    }
 
     if (!name) {
       errors.name = "Name is required"
     }
-
-    if (!interest) {
-      errors.interest = "An interest is required"
+    for(var prop in interest){
+      if(!interest[prop]){
+        errors[prop] = "Interest " + prop +" is required"
+      }
     }
 
     this.setState({
@@ -37,22 +42,83 @@ BankEditor = React.createClass({
     if (! _.isEmpty(errors)) {
       return;
     }
-
-    Meteor.call("updateBank", { name : name, interest: interest });
+    //FIX THIS
+    var camelInterest = {
+      list: $(event.target).find("[name=list]").val(),
+      riskOne: $(event.target).find("[name=risk_one]").val(),
+      riskTwo: $(event.target).find("[name=risk_two]").val(),
+      riskThree: $(event.target).find("[name=risk_three]").val(),
+      riskFour: $(event.target).find("[name=risk_four]").val(),
+      riskFive: $(event.target).find("[name=risk_five]").val(),
+      riskSix: $(event.target).find("[name=risk_six]").val()
+    }
+    Meteor.call("updateBank", { bankId: this.props.bank._id, name : name, interest: camelInterest });
     React.findDOMNode(this.refs.textInput).value = "";
   },
   render(){
+    let { bank } = this.props;
+    
     return (
       <div className="game-editor">
-        <h1>Game Editor</h1>
+        <form className="update-bank" onSubmit={ this.handleSubmit }>
+          <div className="heading">Update bank</div>
 
-          <form onSubmit={ this.handleSubmit }>
-           <AuthErrors errors={ this.state.errors } />
+          <AuthErrors errors={ this.state.errors } />
 
-           <FormInput hasError={!!this.state.errors.name} name="Name" type="text" label="Name" value={ this.data.bank.name } />
-           <FormInput hasError={!!this.state.errors.interest} name="Interest" type="number" label="Interest" />
-           <input type="submit" value="Update"/>
-       </form>
+          <FormInput hasError={!!this.state.errors.name} name="name" type="text" label="Name" value={ bank.name } />
+          <table>
+            <thead>
+              <tr><th></th><th>Interest</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>List </td>
+                <td>
+                  <FormInput hasError={!!this.state.errors.list} name="list" type="number" step="0.01" label="none" value={ bank.interest.list }/>
+                </td>
+              </tr>
+              <tr>
+                <td>Risk 1</td>
+                <td>
+                  <FormInput hasError={!!this.state.errors.risk_one} name="risk_one" type="number" step="0.01" label="none" value={ bank.interest.riskOne }/>
+                </td>
+              </tr>
+              <tr>
+                <td>Risk 2</td>
+                <td>
+                  <FormInput hasError={!!this.state.errors.risk_two} name="risk_two" type="number" step="0.01" label="none" value={ bank.interest.riskTwo }/>
+                </td>
+              </tr>
+              <tr>
+                <td>Risk 3</td>
+                <td>
+                  <FormInput hasError={!!this.state.errors.risk_three} name="risk_three" type="number" step="0.01" label="none" value={ bank.interest.riskThree }/>
+                </td>
+              </tr>
+              <tr>
+                <td>Risk 4</td>
+                <td>
+                  <FormInput hasError={!!this.state.errors.risk_four} name="risk_four" type="number" step="0.01" label="none" value={ bank.interest.riskFour }/>
+                </td>
+              </tr>
+              <tr>
+                <td>Risk 5</td>
+                <td>
+                  <FormInput hasError={!!this.state.errors.risk_five} name="risk_five" type="number" step="0.01" label="none" value={ bank.interest.riskFive }/>
+                </td>
+              </tr>
+              <tr>
+                <td>Risk 6</td>
+                <td>
+                  <FormInput hasError={!!this.state.errors.risk_six} name="risk_six" type="number" step="0.01" label="none" value={ bank.interest.riskSix }/>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+
+          <input type="submit" value="Update"/>
+        </form>
       </div>
     )
   }

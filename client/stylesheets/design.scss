@@ -33,6 +33,10 @@ a {
   text-decoration: none;
 }
 
+input[type=submit]{
+  padding: $gutter;
+  color: $cta-color;
+}
 .game{
   .user{
     background-color: $base-light-background-color;

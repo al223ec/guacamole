@@ -74,8 +74,11 @@ if (Meteor.isServer) {
 Meteor.methods({
   updateBank(clientBank){
     var bank = Banks.findOne(clientBank.bankId);
-    if ( bank.owner !== Meteor.userId()) {
+    if (!bank || bank.owner !== Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
+    }
+    if(!clientBank.name || !clientBank.interest){
+      throw new Meteor.Error("bank-is-not-valid");
     }
     Banks.update(clientBank.bankId,  { $set: { interest: clientBank.interest, name: clientBank.name } });
   },
@@ -83,20 +86,12 @@ Meteor.methods({
     if (! Meteor.userId() || !Roles.userIsInRole(Meteor.userId(), 'admin') ) {
       throw new Meteor.Error("not-authorized");
     }
+    if(!clientGame.name){
+      throw new Meteor.Error("game-is-not-valid");
+    }
 
     Games.update(clientGame.gameId,  { $set: { name: clientGame.name } });
   },
-/*  addCustomer(bankId){
-    if (! Meteor.userId()) {
-      throw new Meteor.Error("not-authorized");
-    }
-    const bank = Banks.findOne(bankId);
-    Customers.insert({
-      loan: 1500000,
-      savings: 50000,
-      bankId: bank._id
-    });
-  },*/
   resetGame(gameId){
     if (! Meteor.userId() || !Roles.userIsInRole(Meteor.userId(), 'admin') ) {
       throw new Meteor.Error("not-authorized");

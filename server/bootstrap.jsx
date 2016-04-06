@@ -42,10 +42,11 @@ Meteor.startup(() => {
             owner: user._id,
             gameId: Games.findOne({ players: user._id })._id,
             name: "Bank for" + user.profile.name,
-            
+
             interest: { list: 0, riskOne: 1, riskTwo: 2, riskThree: 3, riskFour: 4, riskFive: 5, riskSix: 6 },
+            growthRate: { riskOne: 0, riskTwo: 0, riskThree: 0, riskFour: 0, riskFive: 0, riskSix: 0 },
             customersCount: 150,
-            growthRate: 0,
+
             profitAndLosses: [],
             interestIncomes: [],
             interestExpense: []

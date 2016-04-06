@@ -2,9 +2,6 @@ Bank = function (doc) {
   _.extend(this, doc);
 };
 _.extend(Bank.prototype, {
-  makeNoise: function () {
-    console.log(this.name);
-  },
   countTotal: function() {
     var total = 0;
     Customers.find( { bankId: this._id} ).map((customer, index, originalCursor) =>{
@@ -15,10 +12,11 @@ _.extend(Bank.prototype, {
   getInterest: function(){
     return this.interest;
   },
-  getCompareValue: function(){
+  getCompareValue: function(risk){
     // Beräkna ett värde som kommer omvandlas till en procentuell andel kunder i förhållande till andra banker
-    var interest = this.interest.list ? this.interest.list : 3;
-    return 10 - interest;
+    // console.log(this.interest[risk])
+    var interest = this.interest[risk] ? this.interest[risk] : 3;
+    return 100 - interest;
   },
   tick: function(){
     /* Tillgångar
@@ -55,7 +53,7 @@ _.extend(Bank.prototype, {
   addGrowthRate: function(growthRate){
     // var _growthRate = growthRate > 1 || growthRate < - 1  ? growthRate - Math.round(growthRate) : growthRate;
     var calculatedGrowtRate = this.getGrowthRate() + growthRate;
-    calculatedGrowtRate -=  Math.floor(this.getGrowthRate()); // customersToAdd > 0 ? calculatedGrowtRate = calculatedGrowtRate - customersToAdd : calculatedGrowtRate -= customersToAdd;
+    calculatedGrowtRate -=  Math.floor(this.getGrowthRate());
 
     var customersToAdd = this.getCustomersCount() + Math.floor(this.getGrowthRate());
     customersToAdd = customersToAdd < 0 ? 0 : customersToAdd;
@@ -64,11 +62,21 @@ _.extend(Bank.prototype, {
       $set: { growthRate: calculatedGrowtRate, customersCount: customersToAdd }
     });
   },
+  addGrowthRateAndReturnCustomersToAdd: function(growthRate){
+    var calculatedGrowtRate = this.getGrowthRate() + growthRate;
+    var customersToAdd = Math.floor(this.getGrowthRate());
+    calculatedGrowtRate -= customersToAdd;
+
+    Banks.update(this._id, {
+      $set: { growthRate: { riskOne: calculatedGrowtRate, riskTwo: 0, riskThree: 0, riskFour: 0, riskFive: 0, riskSix: 0 } }
+    });
+    return customersToAdd;
+  },
   getCustomersCount: function(){
     return this.customersCount == null || isNaN( this.customersCount) ? 0 : this.customersCount;
   },
   getGrowthRate: function(){
-    return this.growthRate == null || isNaN( this.growthRate) ? 0 : this.growthRate;
+    return this.growthRate.riskOne == null || isNaN( this.growthRate.riskOne) ? 0 : this.growthRate.riskOne;
   },
   profitAndLoss: function(){
     return "10000"
