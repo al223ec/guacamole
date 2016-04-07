@@ -20,7 +20,7 @@ Meteor.startup(function () {
 });
 
 function update() {
-  var gameTickTime = 5000;
+  var gameTickTime = 7500;
 
   var games = Games.find();
   games.map((game) =>{

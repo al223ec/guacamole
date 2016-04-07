@@ -99,8 +99,16 @@ Meteor.methods({
 
     game = Games.findOne(gameId)
     game.players.map((player, index, originalCursor) =>{
-      Banks.update(Banks.findOne({ owner: player, gameId: game._id })._id, { $set: { customersCount: 100, growthRate: 0, profitAndLosses: [] }});
+      bank = Banks.findOne({ owner: player, gameId: game._id });
+      Customers.update(
+        { bankId: bank._id, customersCount: { $ne: 2500 } },
+        { $set: { customersCount: 2500 }},
+        { upsert: true, multi: true });
+
+      Banks.update(bank._id, { $set: { profitAndLosses: [] }});
     });
+
+    //Find all customers
 
     Games.update(game._id,  { $set: { time: 0, ongoing: false } });
     // game.reset();

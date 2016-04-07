@@ -44,9 +44,6 @@ Meteor.startup(() => {
             name: "Bank for" + user.profile.name,
 
             interest: { list: 0, riskOne: 1, riskTwo: 2, riskThree: 3, riskFour: 4, riskFive: 5, riskSix: 6 },
-            growthRate: { riskOne: 0, riskTwo: 0, riskThree: 0, riskFour: 0, riskFive: 0, riskSix: 0 },
-            customersCount: 150,
-
             profitAndLosses: [],
             interestIncomes: [],
             interestExpense: []
@@ -58,16 +55,15 @@ Meteor.startup(() => {
     Meteor.users.find({ roles: "player" }).map(
       function(user, index, originalCursor){
         for(var j = 0; j < 6; j++){
-          for(var i = 0; i < 25; i++){
-            Customers.insert({
-              riskClass: j+1,
-              mortgages: 1500000,
-              savings: 50000,
-              customersCount: 100,
-              blanco: 2000,
-              bankId: Banks.findOne({ owner: user._id })._id
-            });
-          }
+
+          Customers.insert({
+            riskClass: j+1,
+            mortgages: 1500000,
+            savings: 50000,
+            customersCount: 2500,
+            blanco: 2000,
+            bankId: Banks.findOne({ owner: user._id })._id
+          });
         }
     });
   }

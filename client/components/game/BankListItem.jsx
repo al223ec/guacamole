@@ -22,7 +22,6 @@ BankListItem = React.createClass({
           <ul>
             <li><strong>Bank info</strong></li>
             <li><div><span className="meta">interest:</span> <strong>{ bank.interest.list } </strong></div></li>
-            <li><div><span className="meta">growthRate:</span> <strong>{ bank.growthRate.riskOne },{ bank.growthRate.riskTwo },{ bank.growthRate.riskThree },{ bank.growthRate.riskFour },{ bank.growthRate.riskFive },{ bank.growthRate.riskSix }</strong></div></li>
             <li><div><span className="meta">customersCount:</span> <strong>{ bank.customersCount } </strong></div></li>
           </ul>
         </div>

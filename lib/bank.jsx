@@ -1,17 +1,8 @@
+var risks = ["riskOne", "riskTwo", "riskThree", "riskFour", "riskFive", "riskSix"];
 Bank = function (doc) {
   _.extend(this, doc);
 };
 _.extend(Bank.prototype, {
-  countTotal: function() {
-    var total = 0;
-    Customers.find( { bankId: this._id} ).map((customer, index, originalCursor) =>{
-      total += customer.loan
-    });
-    return total;
-  },
-  getInterest: function(){
-    return this.interest;
-  },
   getCompareValue: function(risk){
     // Beräkna ett värde som kommer omvandlas till en procentuell andel kunder i förhållande till andra banker
     // console.log(this.interest[risk])
@@ -20,18 +11,25 @@ _.extend(Bank.prototype, {
   },
   tick: function(){
     /* Tillgångar
-
-    TotalBolåneVolym * ränta
     kundStock.bolån * kundstock.antalKunder = BolåneVolym
     BolåneVolym * ranta/365 = RänteIntäktBolånePerDag
+    **/
+    // this.interest.riskOne;
 
+    var customerBase = Customers.findOne({ bankId: this._id, riskClass: 1 })
+    var mortgageBulk = customerBase.mortgages * Math.floor(customerBase.customersCount)
+    mortgageBulk = (mortgageBulk * (this.interest.riskOne/100))/365;
+
+    var blancoBulk = (customerBase.blanco * 1.07)/365;
+    var interestIncomes = mortgageBulk + blancoBulk;
+    /**
     Interest income mortgages
-
     Blanco * blancoränat  / 365
 
     Överlikvid 20% av bolåneVolym + blanco  / 365
     Överlikvid * riksbanksräntan / 365
 
+    interestIncomes
     // == Ränteintäkt
 
     Skulder
@@ -50,41 +48,4 @@ _.extend(Bank.prototype, {
 
     */
   },
-  addGrowthRate: function(growthRate){
-    // var _growthRate = growthRate > 1 || growthRate < - 1  ? growthRate - Math.round(growthRate) : growthRate;
-    var calculatedGrowtRate = this.getGrowthRate() + growthRate;
-    calculatedGrowtRate -=  Math.floor(this.getGrowthRate());
-
-    var customersToAdd = this.getCustomersCount() + Math.floor(this.getGrowthRate());
-    customersToAdd = customersToAdd < 0 ? 0 : customersToAdd;
-
-    Banks.update(this._id, {
-      $set: { growthRate: calculatedGrowtRate, customersCount: customersToAdd }
-    });
-  },
-  addGrowthRateAndReturnCustomersToAdd: function(growthRate){
-    var calculatedGrowtRate = this.getGrowthRate() + growthRate;
-    var customersToAdd = Math.floor(this.getGrowthRate());
-    calculatedGrowtRate -= customersToAdd;
-
-    Banks.update(this._id, {
-      $set: { growthRate: { riskOne: calculatedGrowtRate, riskTwo: 0, riskThree: 0, riskFour: 0, riskFive: 0, riskSix: 0 } }
-    });
-    return customersToAdd;
-  },
-  getCustomersCount: function(){
-    return this.customersCount == null || isNaN( this.customersCount) ? 0 : this.customersCount;
-  },
-  getGrowthRate: function(){
-    return this.growthRate.riskOne == null || isNaN( this.growthRate.riskOne) ? 0 : this.growthRate.riskOne;
-  },
-  profitAndLoss: function(){
-    return "10000"
-  },
-  calculateProfitAndLoss: function(time){
-    console.log("calculateProfitAndLoss")
-    Banks.update(this._id, {
-      $push: { profitAndLosses: { time: time, customersCount: this.customersCount } }
-    });
-  }
 });
