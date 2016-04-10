@@ -20,25 +20,26 @@ _.extend(Game.prototype, {
       banks.map((bank) =>{
         average += bank.getCompareValue(risks[i]);
       });
+
       average = average/banks.count();
-      averageCompareValues[risks[i]] = average;
 
       var onePercent = average/100;
 
       banks.map((bank) => {
         var growth = (bank.getCompareValue(risks[i]) - average)/onePercent; // i procent jämfört med övriga banker
-        var customer = Customers.findOne({ riskClass: i + 1, bankId: bank._id, customersCount: { $gt: 0 } });
+        var customerBase = Customers.findOne({ riskClass: i + 1, bankId: bank._id, customersCount: { $gt: 0 } });
 
-        var mortgageBulk = customer.mortgages * Math.floor(customer.customersCount)
-        mortgageBulk = (mortgageBulk * (bank.interest.riskOne/100))/365;
-        var blancoBulk = customer.blanco * 1.07;
-        var interestIncomes = mortgageBulk + blancoBulk;
-
-        // console.log(averageCompareValues);
         // Addera skydd för när customersCount ev tar slut. kanske funkar med ett minus värde?
-        if(customer){
-          // Addera antal kunder i procent utifrån hur banken står sig mot de övfiga
-          Customers.update( customer._id, { $set: { customersCount:customer.customersCount + customer.customersCount/1000 * growth }});
+        if(customerBase){
+          var mortgageBulk = customerBase.mortgages * Math.floor(customerBase.customersCount)
+          mortgageBulk = (mortgageBulk * (bank.interest.riskOne/100))/365;
+          var blancoBulk = (customerBase.blanco * 1.07)/365;
+          // { time: time, mortgageBulk: mortgageBulk, blancoBulk: blancoBulk, customersCount: Math.floor(customerBase.customersCount) }
+          // Addera antal kunder i procent utifrån hur banken står sig mot de övfigastaface
+          Customers.update( customerBase._id, {
+            $set: { customersCount: customerBase.customersCount + customerBase.customersCount/1000 * growth },
+            $push: { interestIncomes: mortgageBulk + blancoBulk }
+          });
         }
       });
     }

@@ -21,8 +21,7 @@ BankListItem = React.createClass({
         <div className="info">
           <ul>
             <li><strong>Bank info</strong></li>
-            <li><div><span className="meta">interest:</span> <strong>{ bank.interest.list } </strong></div></li>
-            <li><div><span className="meta">customersCount:</span> <strong>{ bank.customersCount } </strong></div></li>
+            <li><div><span className="meta">List interest:</span> <strong>{ bank.interest.list } </strong></div></li>
           </ul>
         </div>
         <div className="results">

@@ -68,7 +68,7 @@ GameStateManager = React.createClass({
             { gameNavigation }
           </div>
         </div>
-        <section> { this.getGameState() } </section>
+        <section className="main-container"> { this.getGameState() } </section>
       </div>
     )
   }

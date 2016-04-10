@@ -46,7 +46,7 @@ Meteor.startup(() => {
             interest: { list: 0, riskOne: 1, riskTwo: 2, riskThree: 3, riskFour: 4, riskFive: 5, riskSix: 6 },
             profitAndLosses: [],
             interestIncomes: [],
-            interestExpense: []
+            interestExpenses: []
           });
       });
   }
@@ -62,7 +62,9 @@ Meteor.startup(() => {
             savings: 50000,
             customersCount: 2500,
             blanco: 2000,
-            bankId: Banks.findOne({ owner: user._id })._id
+            bankId: Banks.findOne({ owner: user._id })._id,
+            interestIncomes: [],
+            interestExpenses: []
           });
         }
     });

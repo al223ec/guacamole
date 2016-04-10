@@ -1,27 +1,9 @@
 @import "{wolves:bourbon}/bourbon";
 @import "{wolves:neat}/neat";
 
-div.game{
-  div.bank-player-list{
-    @include span-columns(12);
-    .bank-player-list-header{
-      @include span-columns(12);
-    }
-    table{
-      @include span-columns(12);
-      tr.bank-list-item{
-        width:100%;
-      }
-      .highlighted{
-        background-color: #ccc;
-      }
-    }
-  }
-}
-form.update-bank{
+@mixin dashboard-item(){
   margin-top: $gutter;
   border: 1px solid #ccc;
-  @include span-columns(6);
   padding: $gutter;
 
   div.heading{
@@ -29,6 +11,25 @@ form.update-bank{
     padding: $gutter/3;
     border-bottom: 1px solid #333;
   }
+}
+
+
+div.interest-incomes-list{
+  @include dashboard-item();
+  @include span-columns(6);
+}
+
+div.customers-list{
+  @include dashboard-item();
+  @include span-columns(6);
+  @include omega();
+  padding: 0;
+}
+
+form.update-bank{
+  @include span-columns(6);
+  @include dashboard-item();
+
   div.form-group{
     label{
       display: inline-block;
@@ -43,20 +44,13 @@ form.update-bank{
 }
 
 div.bank-list-item{
-  margin-top: $gutter;
   @include span-columns(12);
-  border: 1px solid #ccc;
+  @include dashboard-item();
 
   &.highlighted{
     border: 1px solid #333;
   }
 
-  div.heading{
-    @include span-columns(12);
-    padding: $gutter/2;
-    color: white;
-    background-color: #333;
-  }
   div.info{
     @include span-columns(4);
     ul{

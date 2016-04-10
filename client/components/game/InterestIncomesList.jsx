@@ -1,4 +1,4 @@
-CustomersList = React.createClass({
+InterestIncomesList = React.createClass({
   propTypes: {
     bank: React.PropTypes.object.isRequired,
   },
@@ -15,16 +15,20 @@ CustomersList = React.createClass({
   },
   render() {
     let { customers } = this.data;
+
     if (this.data.loading) {
       return <LoadingSpinner />;
     }
-    return (<div className="customers-list">
-              <div className="heading">Customers list </div>
+
+    return (<div className="interest-incomes-list">
+        <div className="heading">Interest incomes  bank</div>
       <table>
-        <thead><tr><th>RiskClass</th><th>Customers count</th> <th>Mortgage</th><th>Savings </th><th>Blanco</th></tr></thead>
+        <thead><tr><th>Interest income</th></tr></thead>
         <tbody>
         { customers.map((customer) =>{
-          return (<tr><td> { customer.riskClass }</td><td>{ customer.customersCount } </td><td>{ customer.mortgages } </td><td>{ customer.savings } </td><td>{ customer.blanco } </td></tr>)
+          return customer.interestIncomes.map((interestIncome) => {
+            return (<tr><td> { interestIncome }</td></tr>)
+          })
         })}
       </tbody>
     </table>
