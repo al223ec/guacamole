@@ -5,34 +5,41 @@ InterestIncomesList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var data = {};
-    var handle = Meteor.subscribe("customers", this.props.bank._id);
+    var handle = Meteor.subscribe("interest_incomes", this.props.bank._id);
 
     return {
       loading: ! handle.ready(),
       currentUser: Meteor.user(),
-      customers: Customers.find({ bankId: this.props.bank._id }).fetch(),
+      interestIncomes:  InterestIncomes.find({ bankId: this.props.bank._id }).fetch()
     }
+},
+  renderInterestIncomes(){
+    let { interestIncomes } = this.data;
+
+    var total = 0;
+    var rows = []
+
+    for(var i = 0; i < interestIncomes.length; i++){
+      total += interestIncomes[i].value;
+      if((i+1)%30 == 0){
+        rows.push( ( <tr><td> { interestIncomes[i].time }</td> <td> { total }</td> </tr> ) );
+        total = 0;
+      }
+    }
+    return rows;
   },
   render() {
-    let { customers } = this.data;
+    let { interestIncomes } = this.data;
 
     if (this.data.loading) {
       return <LoadingSpinner />;
     }
 
-    return (<div className="interest-incomes-list">
-        <div className="heading">Interest incomes  bank</div>
-      <table>
-        <thead><tr><th>Interest income</th></tr></thead>
+    return (<div><table>
+        <thead><tr><th></th><th>Interest income</th></tr></thead>
         <tbody>
-        { customers.map((customer) =>{
-          return customer.interestIncomes.map((interestIncome) => {
-            return (<tr><td> { interestIncome }</td></tr>)
-          })
-        })}
+        { this.renderInterestIncomes() }
       </tbody>
-    </table>
-
-    </div>);
+    </table></div>);
   }
 });

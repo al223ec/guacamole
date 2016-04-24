@@ -18,7 +18,7 @@ GameStartPage = React.createClass({
     return (<div>
           <span>Startpage</span>
           <BankListItem bank={ bank } player={ currentUser } />
-          <InterestIncomesList bank={ bank } />
+          <AssetsAndDebts bank={ bank } />
           <BankEditor bank={ bank } />
           <CustomersList bank={ bank } />
       </div>);

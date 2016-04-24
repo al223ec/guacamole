@@ -19,7 +19,7 @@ CustomersList = React.createClass({
       return <LoadingSpinner />;
     }
     return (<div className="customers-list">
-              <div className="heading">Customers list </div>
+            <div className="heading">Customers list </div>
       <table>
         <thead><tr><th>RiskClass</th><th>Customers count</th> <th>Mortgage</th><th>Savings </th><th>Blanco</th></tr></thead>
         <tbody>

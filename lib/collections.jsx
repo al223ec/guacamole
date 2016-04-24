@@ -6,12 +6,20 @@ Banks = new Mongo.Collection("banks", {
   transform: function transformBank (doc) { return new Bank(doc); }
 });
 
+InterestIncomes = new Mongo.Collection("interest_incomes", {
+  transform: function transformInterestIncome (doc) { return new InterestIncome(doc); }
+});
+
+InterestExpenses = new Mongo.Collection("interest_expenses", {
+  transform: function transformInterestExpense (doc) { return new InterestExpense(doc); }
+});
+
+
 Customers = new Mongo.Collection("customers");
 
 // ProfitAndLoss = new Mongo.Collection("profitAndLoss");
 
 if (Meteor.isServer) {
-
   Meteor.publish("games", function () {
     if(this.userId){
       return Roles.userIsInRole(this.userId, 'admin') ? Games.find({}) : Games.find({ players: this.userId } );
@@ -50,24 +58,26 @@ if (Meteor.isServer) {
     }
   });
 
+  Meteor.publish("interest_incomes", function(bankId){
+    if (! this.userId) {
+      throw new Meteor.Error("not-authorized");
+    }
+    return InterestIncomes.find({ bankId: bankId });
+  });
 
-  // Meteor.publish("banksWithCustomers", function(){
-  //   if(this.userId){
-  //     var game = Games.findOne({ players: this.userId, ongoing: true });
-  //     var banks = Banks.find({ owner: { $in: game.players }, gameId: game._id });
-  //     var bankIds = banks.map(function(bank){ return bank._id });
-  //
-  //     return [
-  //       banks,
-  //       Customers.find({ bankId: { $in: bankIds }})
-  //     ]
-  //   }
-  // });
+  Meteor.publish("interest_expenses", function(bankId){
+    if (! this.userId) {
+      throw new Meteor.Error("not-authorized");
+    }
+    return InterestExpenses.find({ bankId: bankId });
+  });
 
   Meteor.publish("customers", function(bankId){
-    if(this.userId){
-      return Customers.find({ bankId: bankId });
+    if (! this.userId) {
+      throw new Meteor.Error("not-authorized");
     }
+
+    return Customers.find({ bankId: bankId });
   });
 }
 
@@ -77,7 +87,7 @@ Meteor.methods({
     if (!bank || bank.owner !== Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
-    if(!clientBank.name || !clientBank.interest){
+    if(!clientBank.name || !clientBank.interest || !clientBank.blancoInterest){
       throw new Meteor.Error("bank-is-not-valid");
     }
     Banks.update(clientBank.bankId,  { $set: { interest: clientBank.interest, name: clientBank.name } });
@@ -106,9 +116,10 @@ Meteor.methods({
         { upsert: true, multi: true });
 
       Banks.update(bank._id, { $set: { profitAndLosses: [] }});
+      InterestIncomes.remove({ bankId: bank._id });
+      InterestExpenses.remove({ bankId: bank._id })
     });
 
-    //Find all customers
 
     Games.update(game._id,  { $set: { time: 0, ongoing: false } });
     // game.reset();
