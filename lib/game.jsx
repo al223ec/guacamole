@@ -40,6 +40,8 @@ _.extend(Game.prototype, {
             $set: { customersCount: customerBase.customersCount + customerBase.customersCount/1000 * growth },
             $push: { interestIncomes: mortgageBulk + blancoBulk }
           });
+
+          //IntersetIncomes must be put in a seperate db.collection with a reference to customerBase
         }
       });
     }
