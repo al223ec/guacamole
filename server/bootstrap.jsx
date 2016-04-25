@@ -43,7 +43,10 @@ Meteor.startup(() => {
             gameId: Games.findOne({ players: user._id })._id,
             name: "Bank for" + user.profile.name,
 
-            interest: { list: 0, riskOne: 1, riskTwo: 2, riskThree: 3, riskFour: 4, riskFive: 5, riskSix: 6 },
+            interest: { list: 2, riskOne: 1.54, riskTwo: 1.89, riskThree: 2.1, riskFour: 2.9, riskFive: 3.5, riskSix: 4.6 },
+            blancoInterest: { list: 5, riskOne: 4.2, riskTwo: 4.9, riskThree: 5.6, riskFour: 6.5, riskFive: 7.5, riskSix: 8 },
+            savingsInterest: 1.1,
+            
             profitAndLosses: [],
             interestIncomes: [],
             interestExpenses: []
@@ -63,8 +66,6 @@ Meteor.startup(() => {
             customersCount: 2500,
             blanco: 2000,
             bankId: Banks.findOne({ owner: user._id })._id,
-            interestIncomes: [],
-            interestExpenses: []
           });
         }
     });
