@@ -14,6 +14,13 @@ InterestExpenses = new Mongo.Collection("interest_expenses", {
   transform: function transformInterestExpense (doc) { return new InterestExpense(doc); }
 });
 
+SurplusIncomes = new Mongo.Collection("surplus_incomes", {
+  transform: function transformSurplusIncome(doc) { return new SurplusIncome(doc); }
+});
+
+ExternalFoundingExpenses = new Mongo.Collection("external_founding_expenses", {
+  transform: function transformExternalFoundingExpenses(doc) { return new ExternalFoundingExpense(doc); }
+});
 
 Customers = new Mongo.Collection("customers");
 

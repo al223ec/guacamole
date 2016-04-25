@@ -31,7 +31,8 @@ Meteor.startup(() => {
       ongoing: true,
       players: players,
       name : "BankGameName",
-      time : 0
+      time : 0,
+      keyInterestRate : 1.5
     });
   }
 
@@ -46,7 +47,7 @@ Meteor.startup(() => {
             interest: { list: 2, riskOne: 1.54, riskTwo: 1.89, riskThree: 2.1, riskFour: 2.9, riskFive: 3.5, riskSix: 4.6 },
             blancoInterest: { list: 5, riskOne: 4.2, riskTwo: 4.9, riskThree: 5.6, riskFour: 6.5, riskFive: 7.5, riskSix: 8 },
             savingsInterest: 1.1,
-            
+            checkingInterest: 0.3,
             profitAndLosses: [],
             interestIncomes: [],
             interestExpenses: []
@@ -63,6 +64,7 @@ Meteor.startup(() => {
             riskClass: j+1,
             mortgages: 1500000,
             savings: 50000,
+            checkings: 10000,
             customersCount: 2500,
             blanco: 2000,
             bankId: Banks.findOne({ owner: user._id })._id,
