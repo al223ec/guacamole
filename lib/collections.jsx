@@ -22,6 +22,10 @@ ExternalFoundingExpenses = new Mongo.Collection("external_founding_expenses", {
   transform: function transformExternalFoundingExpenses(doc) { return new ExternalFoundingExpense(doc); }
 });
 
+BalanceSheets = new Mongo.Collection("balance_sheets", {
+  transform: function transformBalanceSheets(doc) { return new BalanceSheet(doc); }
+});
+
 Customers = new Mongo.Collection("customers");
 
 // ProfitAndLoss = new Mongo.Collection("profitAndLoss");
@@ -79,6 +83,13 @@ if (Meteor.isServer) {
     return InterestExpenses.find({ bankId: bankId });
   });
 
+  Meteor.publish("balance_sheets", function(bankId){
+    if (! this.userId) {
+      throw new Meteor.Error("not-authorized");
+    }
+    return BalanceSheets.find({ bankId: bankId });
+  });
+
   Meteor.publish("customers", function(bankId){
     if (! this.userId) {
       throw new Meteor.Error("not-authorized");
@@ -123,8 +134,7 @@ Meteor.methods({
         { upsert: true, multi: true });
 
       Banks.update(bank._id, { $set: { profitAndLosses: [] }});
-      InterestIncomes.remove({ bankId: bank._id });
-      InterestExpenses.remove({ bankId: bank._id })
+      BalanceSheets.remove({ bankId: bank._id });
     });
 
 
