@@ -21,7 +21,6 @@ GameStartPage = React.createClass({
           <BalanceSheetList bank={ bank } />
 
           <BankEditor bank={ bank } />
-          <CustomersList bank={ bank } />
       </div>);
   }
 });
