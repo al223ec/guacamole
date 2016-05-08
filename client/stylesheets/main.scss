@@ -1,45 +1,45 @@
-@import "{wolves:bourbon}/bourbon";
-@import "{wolves:neat}/neat";
-@import url(https://fonts.googleapis.com/css?family=Ek+Mukta);
-
-body{
-  font-family: 'Ek Mukta', sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6{
-  font-family: 'verdana', sans-serif;
-}
-a{
-  text-transform: uppercase;
-}
-
-div.container{
-  @include outer-container;
-
-  header.page-header {
-    @include span-columns(12);
-    div{
-      @include span-columns(6);
-      h1{
-        margin: 0;
-        padding: 0;
-      }
-    }
-    ul{
-      @include span-columns(6);
-      margin: 0;
-      padding: 0;
-      li{
-        padding: 1em;
-        @include span-columns(2);
-      }
-    }
-  }
-
-  section.page-content{
-    @include span-columns(12);
-  }
-  footer.page-footer{
-    @include span-columns(12);
-  }
-}
+// @import "{wolves:bourbon}/bourbon";
+// @import "{wolves:neat}/neat";
+// @import url(https://fonts.googleapis.com/css?family=Ek+Mukta);
+//
+// body{
+//   font-family: 'Ek Mukta', sans-serif;
+// }
+//
+// h1, h2, h3, h4, h5, h6{
+//   font-family: 'verdana', sans-serif;
+// }
+// a{
+//   text-transform: uppercase;
+// }
+//
+// div.container{
+//   @include outer-container;
+//
+//   header.page-header {
+//     @include span-columns(12);
+//     div{
+//       @include span-columns(6);
+//       h1{
+//         margin: 0;
+//         padding: 0;
+//       }
+//     }
+//     ul{
+//       @include span-columns(6);
+//       margin: 0;
+//       padding: 0;
+//       li{
+//         padding: 1em;
+//         @include span-columns(2);
+//       }
+//     }
+//   }
+//
+//   section.page-content{
+//     @include span-columns(12);
+//   }
+//   footer.page-footer{
+//     @include span-columns(12);
+//   }
+// }

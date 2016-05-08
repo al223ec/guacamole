@@ -95,7 +95,8 @@ authenticatedAdmin.route("/", {
 
 function renderMainLayoutWith(component){
   ReactLayout.render(MainLayout, {
-    header: <Header />,
+    header: <TopMenu />,
+    sideMenu: <SideMenu />,
     content: component,
     footer: <Footer />
   });

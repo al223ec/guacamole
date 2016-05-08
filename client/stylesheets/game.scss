@@ -1,93 +1,93 @@
-@import "{wolves:bourbon}/bourbon";
-@import "{wolves:neat}/neat";
-
-@mixin dashboard-item(){
-  margin-top: $gutter;
-  border: 1px solid #ccc;
-  padding: $gutter;
-
-  div.heading{
-    @include span-columns(12);
-    padding: $gutter/3;
-    border-bottom: 1px solid #333;
-  }
-}
-
-
-div.interest-incomes-list{
-  @include dashboard-item();
-  @include span-columns(6);
-}
-
-div.customers-list{
-  @include dashboard-item();
-  @include span-columns(6);
-  @include omega();
-  padding: 0;
-}
-
-form.update-bank{
-  @include span-columns(6);
-  @include dashboard-item();
-  td{
-    max-width: 20%;
-  }
-  div.form-group{
-
-    label{
-      display: inline-block;
-
-//      width: 20%;
-    }
-    input[type="number"]{
-      width:60px;
-    }
-  }
-  input{
-    padding: $gutter/5;
-    margin: $gutter/3;
-  }
-}
-
-div.bank-list-item{
-  @include span-columns(12);
-  @include dashboard-item();
-
-  &.highlighted{
-    border: 1px solid #333;
-  }
-
-  div.info{
-    @include span-columns(4);
-    ul{
-      list-style: none;
-      li{
-        border-bottom: 1px solid #ccc;
-        div{
-          text-align: right;
-        }
-        span.meta{
-          float: left;
-        }
-      }
-    }
-  }
-  div.results{
-    @include span-columns(8);
-    padding-top: $gutter/2;
-    padding-bottom: $gutter/2;
-
-    table{
-      border-left: 1px solid #ccc;
-      border-right: 1px solid #ccc;
-      border-collapse:collapse;
-
-      tbody{
-        text-align: center;
-        tr {
-          border-top: 1px solid #ccc;
-        }
-      }
-    }
-  }
-}
+// @import "{wolves:bourbon}/bourbon";
+// @import "{wolves:neat}/neat";
+//
+// @mixin dashboard-item(){
+//   margin-top: $gutter;
+//   border: 1px solid #ccc;
+//   padding: $gutter;
+//
+//   div.heading{
+//     @include span-columns(12);
+//     padding: $gutter/3;
+//     border-bottom: 1px solid #333;
+//   }
+// }
+//
+//
+// div.interest-incomes-list{
+//   @include dashboard-item();
+//   @include span-columns(6);
+// }
+//
+// div.customers-list{
+//   @include dashboard-item();
+//   @include span-columns(6);
+//   @include omega();
+//   padding: 0;
+// }
+//
+// form.update-bank{
+//   @include span-columns(6);
+//   @include dashboard-item();
+//   td{
+//     max-width: 20%;
+//   }
+//   div.form-group{
+//
+//     label{
+//       display: inline-block;
+//
+// //      width: 20%;
+//     }
+//     input[type="number"]{
+//       width:60px;
+//     }
+//   }
+//   input{
+//     padding: $gutter/5;
+//     margin: $gutter/3;
+//   }
+// }
+//
+// div.bank-list-item{
+//   @include span-columns(12);
+//   @include dashboard-item();
+//
+//   &.highlighted{
+//     border: 1px solid #333;
+//   }
+//
+//   div.info{
+//     @include span-columns(4);
+//     ul{
+//       list-style: none;
+//       li{
+//         border-bottom: 1px solid #ccc;
+//         div{
+//           text-align: right;
+//         }
+//         span.meta{
+//           float: left;
+//         }
+//       }
+//     }
+//   }
+//   div.results{
+//     @include span-columns(8);
+//     padding-top: $gutter/2;
+//     padding-bottom: $gutter/2;
+//
+//     table{
+//       border-left: 1px solid #ccc;
+//       border-right: 1px solid #ccc;
+//       border-collapse:collapse;
+//
+//       tbody{
+//         text-align: center;
+//         tr {
+//           border-top: 1px solid #ccc;
+//         }
+//       }
+//     }
+//   }
+// }

@@ -10,7 +10,7 @@ BalanceSheetList = React.createClass({
     return {
       loading: !handle.ready(),
       currentUser: Meteor.user(),
-      balanceSheets: BalanceSheets.find({ bankId: this.props.bank._id }).fetch()
+      balanceSheets: BalanceSheets.find({ bankId: this.props.bank._id }).fetch(10)
     }
   },
   // renderInterestExpenses(){
