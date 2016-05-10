@@ -1,6 +1,6 @@
 GameStateManager = React.createClass({
   propTypes: {
-  //  gameId: React.PropTypes.string.isRequired,
+    gameId: React.PropTypes.string.isRequired,
     gameState: React.PropTypes.string.isRequired
   },
   mixins: [ReactMeteorData],
@@ -39,29 +39,33 @@ GameStateManager = React.createClass({
       return <LoadingSpinner />;
     }
 
-    let { game, currentUser, isAdmin } = this.data;
-    var gameNavigation;
-
-    if(isAdmin){
-      gameNavigation = (<ul><li>Administrator</li></ul>);
-    }else {
-      gameNavigation = (<ul>
-        <li><span className='icon icon-briefcase'></span><a href={ "/game/" + game._id + "/start" }>Start</a></li>
-        <li><a href={ "/game/" + game._id + "/toplist" }>Toplist</a></li>
-      </ul>);
-    }
+    let { game, currentUser } = this.data;
 
     return (
-      <div className="game">
-        <div className="count">{ game.name }
-        <span className="count_top"><i class="fa fa-clock-o" aria-hidden="true"></i> Time </span> { game.time } { game.ongoing ? "Live" : "Paused" } </div>
+      <div>
+        <div className="row top_tiles">
+          <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div className="tile-stats">
+              <p><i className="fa fa-clock-o"></i> Time</p>
+              <div className="count">{ game.time }</div>
+            </div>
+          </div>
 
+          <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div className="tile-stats">
+              <p><i className="fa fa-clock-o"></i> Status</p>
+              <div className="count">{ game.ongoing ? "Live" : "Paused" } </div>
+            </div>
+          </div>
 
-        <div className="game-navigation-container">
-          <div className="game-navigation">
-            { gameNavigation }
+          <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div className="tile-stats">
+              <p><i className="fa fa-line-chart"></i> stibor</p>
+              <div className="count">1.5 %</div>
+            </div>
           </div>
         </div>
+
         <section className="main-container"> { this.getGameState() } </section>
       </div>
     )

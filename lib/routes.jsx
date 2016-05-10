@@ -62,21 +62,21 @@ var gameRoutes = authenticated.group({
 gameRoutes.route('/start', {
   name: "Start",
   action(params){
-    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } gameState="startPage" />);
+    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } gameState="startPage" />, <GameSideMenu gameId={ params.game_id } />);
   },
 });
 
 gameRoutes.route('/toplist', {
   name: "Toplist",
   action(params){
-    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } gameState="toplist" />);
+    renderMainLayoutWith(<GameStateManager gameId={ params.game_id } gameState="toplist" />, <GameSideMenu gameId={ params.game_id } />);
   },
 });
 
 authenticatedAdmin.route("/", {
   name: "AdminDashboard",
   action(params){
-    renderMainLayoutWith(<GameStateManager gameState="admin" />);
+    renderMainLayoutWith(<GameStateManager gameState="admin" />, <GameSideMenu gameId={ params.game_id } />);
   }
 });
 // authenticated.route("/bank/:id", {
@@ -93,10 +93,10 @@ authenticatedAdmin.route("/", {
 //   }
 // });
 
-function renderMainLayoutWith(component){
+function renderMainLayoutWith(component, sideMenu){
   ReactLayout.render(MainLayout, {
     header: <TopMenu />,
-    sideMenu: <SideMenu />,
+    sideMenu: sideMenu || <SideMenu /> ,
     content: component,
     footer: <Footer />
   });

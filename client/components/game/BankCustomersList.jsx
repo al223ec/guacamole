@@ -30,7 +30,6 @@ BankCustomersList = React.createClass({
       mortgagesTotal += customer.mortgages * Math.floor(customer.customersCount);
       savingsTotal += customer.savings * Math.round(customer.customersCount);
       blancoTotal += customer.blanco * Math.round(customer.customersCount);
-      console.log(customer)
     });
 
 

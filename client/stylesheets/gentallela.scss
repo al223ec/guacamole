@@ -1496,30 +1496,35 @@ span.right {
   width: 230px;
   z-index: 1000;
   background: #2A3F54;
+
+  a {
+    padding: 7px 0 3px;
+    text-align: center;
+    width: 25%;
+    font-size: 17px;
+    display: block;
+    float: left;
+    background: #172D44;
+
+    &:hover {
+      background: #425567;
+    }
+  }
 }
-.sidebar-footer a {
-  padding: 7px 0 3px;
-  text-align: center;
-  width: 25%;
-  font-size: 17px;
-  display: block;
-  float: left;
-  background: #172D44;
-}
-.sidebar-footer a:hover {
-  background: #425567;
-}
+
+
 .tile_count {
   margin-bottom: 20px;
   margin-top: 20px;
+  div:first-child .left {
+    border: 0;
+  }
+  .tile_stats_count {
+    border-left: 0px solid #333;
+    padding: 0;
+  }
 }
-.tile_count div:first-child .left {
-  border: 0;
-}
-.tile_count .tile_stats_count {
-  border-left: 0px solid #333;
-  padding: 0;
-}
+
 .tile_stats_count .left {
   width: 15%;
   float: left;
@@ -1716,7 +1721,7 @@ h4.graph_title {
   padding: 0;
 }
 .tile-stats .count {
-  font-size: 38px;
+  font-size: 18px;
   font-weight: bold;
   line-height: 1.65857143
 }

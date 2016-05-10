@@ -15,9 +15,8 @@ FormInput = React.createClass({
     render() {
         const {type, label, name, value, onKeyUp, onBlur, step } = this.props;
         let inputType;
-        
-        var className = "form-group";
 
+        var className = "form-group";
         if (this.props.hasError) {
             className += " has-error";
         }
@@ -35,8 +34,10 @@ FormInput = React.createClass({
         }
         return (
           <div className={ className }>
-              { label === "none" ? "" : <label htmlFor={ name.toLowerCase() } className="control-label">{ name }</label> }
+              { label === "none" ? "" : <label htmlFor={ name.toLowerCase() } className="control-label col-md-3 col-sm-3 col-xs-12">{ name }</label> }
+              <div className="col-md-9 col-sm-9 col-xs-12">
               { inputType }
+              </div>
           </div>
         )
     }
