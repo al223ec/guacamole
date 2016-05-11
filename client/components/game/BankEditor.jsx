@@ -106,7 +106,7 @@ BankEditor = React.createClass({
 
                 <table>
                   <thead>
-                    <tr><th>&nbsp;</th><th>Mortgage interest</th><th>Blanco interest</th><th>Savings interest</th></tr>
+                    <tr><th>&nbsp;</th><th>Mortgage interest</th><th>Credit interest</th><th>Savings interest</th></tr>
                   </thead>
                   <tbody>
                     <tr>
